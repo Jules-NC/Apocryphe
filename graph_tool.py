@@ -5,10 +5,6 @@ Provides Graph object. You can do fun things and export this graph to gephi
 FLEMME DE COMMENTER
 """
 
-from nltk.corpus import wordnet as wn
-from collections import namedtuple
-
-
 def is_cyclic(g):    # Say what you think O(E + V)
     path = set()
 
@@ -29,6 +25,7 @@ class Graph:  # O(1)
         self.edges = edges
         self._it = 0    # For memory and complexity verification
         self.compute_type = None    #None for none, True for degree, False for summing
+
     def is_cyclic(self):
         return is_cyclic(self.edges)
 
@@ -111,39 +108,42 @@ class Graph:  # O(1)
             f.write('Source,Target\n')
             # TODO le CSVage
 
-# edges composition: {[node (int)]:[arcs (str)]}
-vertices = {synset.name(): -1 for synset in wn.all_synsets()}
-edges = {synset.name(): [target.name() for target in synset.hyponyms()] for synset in wn.all_synsets()}
-edges['restrain.v.01'] = ['confine.v.03', 'control.v.02', 'hold.v.36']
+if __name__ == '__main__':
 
-# vertices = {'A':-1,
-#             'B':-1,
-#             'C':-1,
-#             'D':-1,
-#             'E':-1,
-#             'F':-1}
-# edges = {'A':['B','C'],
-#          'B':[],
-#          'C':[],
-#          'D':['C', 'E'],
-#          'E':[],
-#          'F':['B', 'A', 'D']}
+    from nltk.corpus import wordnet as wn
+    # edges composition: {[node (int)]:[arcs (str)]}
+    vertices = {synset.name(): -1 for synset in wn.all_synsets()}
+    edges = {synset.name(): [target.name() for target in synset.hyponyms()] for synset in wn.all_synsets()}
+    edges['restrain.v.01'] = ['confine.v.03', 'control.v.02', 'hold.v.36']
 
-print('CALCULATING...')
+    # vertices = {'A':-1,
+    #             'B':-1,
+    #             'C':-1,
+    #             'D':-1,
+    #             'E':-1,
+    #             'F':-1}
+    # edges = {'A':['B','C'],
+    #          'B':[],
+    #          'C':[],
+    #          'D':['C', 'E'],
+    #          'E':[],
+    #          'F':['B', 'A', 'D']}
 
-gr = Graph(vertices, edges)
-gr.compute_summing()
+    print('CALCULATING...')
 
-inv_map = [[v,k] for k, v in gr.vertices.items()]
-inv_map.sort()
-for e in inv_map:
-    print(e)
+    gr = Graph(vertices, edges)
+    gr.compute_summing()
 
-"""
+    inv_map = [[v,k] for k, v in gr.vertices.items()]
+    inv_map.sort()
+    for e in inv_map:
+        print(e)
 
-print("POIDS: ", a)
-print('MaxPds:', max(a))
-print('Excepted IT:', len(vertices.keys()) == gr._it)
-print("FINISHED !")
+    """
 
-"""
+    print("POIDS: ", a)
+    print('MaxPds:', max(a))
+    print('Excepted IT:', len(vertices.keys()) == gr._it)
+    print("FINISHED !")
+
+    """
