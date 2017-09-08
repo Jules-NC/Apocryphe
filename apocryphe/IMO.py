@@ -50,7 +50,7 @@ def maxf(x, y, s):
     >>> max(0,0,0)
     100
     """
-    # C'est l'histoire d'un bloc dont on oubliera la signification...
+    # C'est lethe_list'histoire d'un bloc dont on oubliera la signification...
     return max(gauss(x, y, s, 100, 0, 0, 3.6, 1.9), 
                gauss(x, y, s, 100, 10, 0, 4.5, 3.75), 
                gauss(x, y, s, 100, 20, 0, 6.4, 7.8))

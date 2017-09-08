@@ -6,7 +6,6 @@ Created on Sat Aug 19 20:46:41 2017
 """
 # IMPORTATIONS
 # TODO comprendre les erreurs d'importations
-from LMAO import *    # TODO ENLEVER IMPORTATIONS CIRCULAIRES
 from IMO import *    # Gère la séléction et la validité du test et d'autres trucs
 import random
 import csv
@@ -16,41 +15,41 @@ import sys
 # VARIABLES GLOBALES
 FICHIER = "./dict.txt"
 IMPORTATION = "./mots.txt"    # TODO DEGEULASSE, utilisé dans IMO !
-AFFICHAGE = False
+AFFICHAGE = False   # You can visualize bad and gud number of each lethe in LMAO with this TODO: RETIRER !
 
 
 class Apocryphe:
     def __init__(self):
-        self.l = to_lethe_list(FICHIER)
+        self.lethe_list = to_lethe_list(FICHIER)
         self.sort()
 
     def select(self):   # le select est celui en 1er
         chosen_indice = random_pond(self.to_pds())
         if chosen_indice == 0:
-            self.l[0].pds = self.l[1].pds-1
+            self.lethe_list[0].pds = self.lethe_list[1].pds - 1
         self.inv(0, chosen_indice)   # Inv des indices 0 et chosen_indice
-        return self.l[0]
+        return self.lethe_list[0]
 
     def delete(self, a, *useless):
         try:
-            self.l.remove(self.get_lethe(a))
+            self.lethe_list.remove(self.get_lethe(a))
             return True
         except ValueError:
             return False
 
     def unlock(self, *useless):
-        for e in self.l: 
+        for e in self.lethe_list:
             if e.pds == 0:
                 e.pds = 100
         return True
 
     def reset(self, *useless):
-        for e in self.l:
+        for e in self.lethe_list:
             e.reset()
         return True
 
     def save(self, *useless):
-        save(self.l)
+        save(self.lethe_list)
         return True
 
     def quit(self, *useless):
@@ -61,18 +60,18 @@ class Apocryphe:
         sys.exit()
 
     def edit(self, key, value):
-        for i in range(len(self.l)):
-            if key == self.l[i].en:
-                self.l[i].fr = value
+        for i in range(len(self.lethe_list)):
+            if key == self.lethe_list[i].en:
+                self.lethe_list[i].fr = value
                 return True
         return False
 
     def inv(self, i, j):
-        t = self.l[i]
-        self.l[i] = self.l[j]
-        self.l[j] = t
+        t = self.lethe_list[i]
+        self.lethe_list[i] = self.lethe_list[j]
+        self.lethe_list[j] = t
 
-    def to_pds(self): return [int(e.pds) for e in self.l]
+    def to_pds(self): return [int(e.pds) for e in self.lethe_list]
 
     def add(self, a, b):    # A REVOIR
         if a is None or b is None:
@@ -82,7 +81,7 @@ class Apocryphe:
         if len(b[0]) <= 3:
             return False
         if self.get_lethe(a) is None:
-            self.l.append(Lethe(a, b))
+            self.lethe_list.append(Lethe(a, b))
             return True
         return False
 
@@ -112,34 +111,44 @@ class Apocryphe:
         return res
 
     def sorted_print(self, *useless):
-        for e in self.l:
+        for e in self.lethe_list:
             print(e.en + "," + str(e.fr) + "," + str(e.pds))
         print("")
         return True        
 
     def sort(self, *useless):
-        self.l.sort(key=lambda x: x.pds, reverse=True)
+        self.lethe_list.sort(key=lambda x: x.pds, reverse=True)
         return True
 
     def sort_alphabetical(self, *useless):
-        self.l.sort(key=lambda x: x.en)
+        self.lethe_list.sort(key=lambda x: x.en)
         return True
 
     def get_lethe(self, a, useless=None):
-        for e in self.l:
+        for e in self.lethe_list:
             if e.en == a:
                 return e
         return None
 
     def no_brothers(self, *useless):    # A vérifier !
         self.sort_alphabetical()
-        for i, e in enumerate(self.l[:-1]):
-            if e.en == self.l[i+1].en:
-                self.l.remove(i+1)
+        for i, e in enumerate(self.lethe_list[:-1]):
+            if e.en == self.lethe_list[i+1].en:
+                self.lethe_list.remove(i + 1)
         return True
 
 
 class Lethe:
+    """Lethe manages a unique word, and all the parameters associates to theses words.
+
+    Lethe contain many arguments:
+    :arg en: The english word
+    :arg fr: The french traduction(s) of the word. It's a list
+    :arg pds: A value set by gaussian calculations
+    :arg gud: Number of test failures
+    :arg bad: Number of test success
+    :arg row: Number of row fail or success
+    """
     def __init__(self, en, fr, pds=100, gud=0, bad=0, last=False, row=0):
         self.en = en
         self.fr = fr
@@ -149,18 +158,34 @@ class Lethe:
         self.last = last
         self.row = row
 
-    def add_fr(self, sens):
-        self.fr.append(sens)
+    def add_fr(self, meaning):
+        """Add a french meaning at the object.
+
+        :param self: Lethe object
+        :param meaning: a new meaning of the word
+        """
+        self.fr.append(meaning)
         self.fr = list(set(self.fr))
 
-    def del_fr(self, sens):
+    def del_fr(self, meaning):
+        """Delete a french meaning at the object.
+
+        :param self: Lethe object
+        :param meaning: a meaning of the word to be deleted
+        :return: False if meaning is not in self.fr, True otherwise
+        """
         try:
-            self.fr.remove(sens)
+            self.fr.remove(meaning)
             return True
         except ValueError:
             return False
 
     def add_bad(self, i):
+        """Regulation of the number of self.bad and self.gud
+
+        A Lethe can't have more than 20 gud or 20 bad (20 included).
+        So if a Lethe have more than 20 gud, we reduce the number of bad.
+        """
         if self.bad + i >= 20 and self.gud + i >= 2:
             self.add_gud(-1)
         elif self.bad >= 20:
@@ -169,6 +194,11 @@ class Lethe:
             self.bad += i
 
     def add_gud(self, i):
+        """Regulation of the number of self.gud and self.bad
+
+        A Lethe can't have more than 20 gud or 20 bad (20 included).
+        So if a Lethe have more than 20 gud, we reduce the number of bad.
+        """
         if self.gud + i >= 20 and self.bad + i >= 2:
             self.add_bad(-1)
         elif self.gud >= 20:
@@ -176,52 +206,73 @@ class Lethe:
         else:
             self.gud += i
 
-    def add_row(self, b):
-        if b and self.last and self.row > -10:
+    def add_row(self, value_to_add):
+        """Manages row
+
+        Row set to 0 if True and False and row > 8  (8 is a hyperparameter)
+        Row - if True and True
+        Row + if False and false
+        """
+        if value_to_add and self.last and self.row > -10:
             self.row -= 1
-        elif not b and not self.last and self.row < 10:
+        elif not value_to_add and not self.last and self.row < 10:
             self.row += 1
-        elif not(b and self.last) and self.row <= 4 and self.row >= -4:
+        elif not(value_to_add and self.last) and self.row <= 4 and self.row >= -4:
             self.row = 0
-        self.last = b
-        print(colored("ROW: " + str(self.row) + " ", 'grey', 'on_white', attrs=['bold']))
+        self.last = value_to_add
+        print("ROW: " + str(self.row))
 
     def set_pds(self, i):
+        """Set pds between 5 and 200 included
+
+        :arg i: value you want for self.pds
+        :return: i but normalised between 5 and 200
+        """
         self.pds = regulate(i, 5, 200)
         return True
 
     def reset(self):
+        """Reset this Lethe to defaults values for all train values"""
         self.pds = 100
         self.row = 0
         self.gud = 0
         self.bad = 0
 
     def test(self, t):    #LOL C BON
-        if(AFFICHAGE): line_print("GUD: " + str(self.gud) + " ")
-        if(AFFICHAGE): line_print("BAD: " + str(self.bad) + " ")
+        if(AFFICHAGE): print("GUD: " + str(self.gud))
+        if(AFFICHAGE): print("BAD: " + str(self.bad))
         if (levenshtein_list(self.fr, t) <= 3):
             self.add_gud(1)
             self.add_row(True)
             self.set_pds(maxf(self.bad, self.gud, self.row)) #LOL COD DE MERD
 
-            line_print("Pds:" + str(int(self.pds)) + " ", None)
-            print(colored("GUD: " + str(self.fr) + " ", 'white', "on_green", attrs=['bold']))
+            print("Pds:" + str(int(self.pds)))
+            print("GUD: " + str(self.fr))
             return True
         else:
             self.add_bad(1)
             self.add_row(False)
             self.set_pds(maxf(self.bad, self.gud, self.row))#LOL COD DE MERD
 
-            line_print("Pds:" + str(int(self.pds)) + " ", None)
-            print(colored("BAD: " + str(self.fr) + " ", 'white', "on_red", attrs=['bold']))            
+            print("Pds:" + str(int(self.pds)))
+            print("BAD: " + str(self.fr))
             return False
 
     def lock(self, *useless):
+        """Set pds of this Lethe to 0 => will not be selectionned again"""
         self.pds = 0
         return True
 
 
 def to_lethe_list(f):   # Verified
+    """Return a list of all Lethes presents in a pseudo-csv file.
+
+    A pseudo-csv file is a csv file wihout the firts line. It's weird
+    So you read this and you create Lethes (1 line = 1 Lethe) and you pack these Lethes together.
+
+    :arg f: the path to the file
+    :return A beautiful list of all Lethes presents in your file
+    """
     with open(f, 'r') as f:
         csv_file = csv.reader(f)
         l = list(csv_file)
@@ -229,8 +280,9 @@ def to_lethe_list(f):   # Verified
 
 
 def save(l):    # Csv 1/2
-    # TODO faire un VRAI csv
-    # Todo utiliser les noms de fichiers de data_processing
+    # TODO: Bien tout comprendre de si c'est une letheList ou des Lethes on sait pas trop comment
+    # TODO: faire un VRAI csv
+    # TODO: utiliser les noms de fichiers de data_processing
     with open(FICHIER, mode='w', encoding='utf8') as f:
         for e in l:
             fr = ""
@@ -240,7 +292,8 @@ def save(l):    # Csv 1/2
             f.write(e.en+","+fr+","+str(e.pds)+","+str(e.gud)+","+str(e.bad)+"\n")
 
 
-def random_pond(l):    # TODO meilleure description de l'algorithme
+def random_pond(l):    # TODO meilleure description de lethe_list'algorithme
+    # TODO: Description de cette focntion
     # Init
     chosen_number = random.randint(0, sum(l)-1)
     i = 0

@@ -1,4 +1,3 @@
-wide,large;vaste,102.2996891435279,0,2
 well,puit,104.5154491713458,0,1
 whimper,geindre,104.5154491713458,0,1
 beneath_him,indigne de,104.5154491713458,0,1
@@ -12,8 +11,10 @@ beyond,au-dela,104.5154491713458,0,1
 among,entre;parmi,104.5154491713458,0,1
 hood,capuchon;capuche,104.5154491713458,0,1
 chill,froid;frisson,104.5154491713458,0,1
-delight,joie;avec_joie;grand_plaisir,100.0,0,0
+well_up,monter,104.5154491713458,0,1
+wide,large;vaste,102.2996891435279,0,2
 stir,remuer;agiter;émouvoir,102.2996891435279,0,2
+delight,joie;avec_joie;grand_plaisir,100.0,0,0
 rag,chiffon;lambeaux;chiffonner,100.0,0,0
 broad,large,100.0,0,0
 slink,furif;furtivement,100.0,0,0
@@ -42,7 +43,6 @@ snatch,prendre_vite;saisir vite;attraper_vite,100.0,0,0
 at a glance,en un coup d'oeuil,100.0,0,0
 shone,eclairer;briller,100.0,0,0
 to have something in one's grasp,avoir prise,100.0,0,0
-well_up,monter,104.5154491713458,0,1
 sap,seve,100.0,0,0
 gaunt,émacié;décharné;morne;lugubre,100.0,0,0
 greasy,gras;graisse,100.0,0,0
