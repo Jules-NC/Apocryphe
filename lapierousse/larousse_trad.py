@@ -11,14 +11,14 @@ class MyHTMLParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if len(attrs) is not 0:
-            if 'article_bilingue' in attrs[0]:
+            if 'content en-fr' in attrs[0]:
                 self.content = True
         if self.content:
             self.indent += '    '
             print(self.indent, '<', tag, '>', attrs, sep='')
 
     def handle_endtag(self, tag):
-        if self.content and tag == 'div':
+        if self.content and tag == 'article':
             self.content = False
         elif self.content:
             print(self.indent, '</', tag, '>', '\n', sep='')
