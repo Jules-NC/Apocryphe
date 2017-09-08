@@ -3,6 +3,7 @@
 Provides Graph object. You can do fun things and export this graph to gephi (if you want)
 For complexity, V is the number of vertices and E the number of Edges
 """
+import datetime    # For file name ==> no duplicates
 import pickle
 
 
@@ -19,13 +20,19 @@ def is_cyclic(g):   # O(E + V)
         return False
     return any(visit(v) for v in g)
 
+def construct_filename(folder='Misc', filename='dummy', extension='txt'):
+    now = datetime.datetime.now()
+    folder = './Documents/' + folder + '/'
+    date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
+    filename = folder + filename + date + '.' + extension
+    return filename
 
 class Graph:  # O(1)
     def __init__(self, vertices, edges):
         self.vertices = vertices
         self.edges = edges
         self._it = 0    # For memory and complexity verification
-        self.compute_type = None    # None for none, True for degree, False for summing
+        self.compute_type = None    # Used for edge addition: None for none, True for degree, False for summing
 
     def is_cyclic(self):
         return is_cyclic(self.edges)
@@ -114,7 +121,9 @@ class Graph:  # O(1)
             print(str(key), '(', self.vertices[key], ") => ", self.edges[key], sep="")
         print('======[END]======')
 
-    def to_csv(self, file='./Graphs/graph1.csv'):   # O(2V)
+    def to_csv(self, filename='vizualization'):   # O(2V)
+        file = construct_filename('Databases', filename, 'csv')
+
         edges = ((str(source), str(target), str(self.vertices[source]))     # Source/Target/Computed_value
                  for source in self.vertices for target in self.edges[source])
 
@@ -123,7 +132,8 @@ class Graph:  # O(1)
             for edge in edges:
                 f.write(edge[0] + ',' + edge[1] + ',' + edge[2] + '\n')
 
-    def save(self, file='graph1.pkl'):    # O(sef)
+    def save(self):    # O(sef)
+        file = construct_filename('Pickles','graph','pkl')
         with open(file, 'wb') as f:
             pickle.dump(self, f)
 
@@ -131,26 +141,28 @@ if __name__ == '__main__':
 
     from nltk.corpus import wordnet as wn
     # edges composition: {[node (int)]:[arcs (str)]}
-    vertices = {synset.name(): -1 for synset in wn.all_synsets()}
-    edges = {synset.name(): [target.name() for target in synset.hyponyms()] for synset in wn.all_synsets()}
-    edges['restrain.v.01'] = ['confine.v.03', 'control.v.02', 'hold.v.36']
+    # vertices = {synset.name(): -1 for synset in wn.all_synsets()}
+    # edges = {synset.name(): [target.name() for target in synset.hyponyms()] for synset in wn.all_synsets()}
+    # edges['restrain.v.01'] = ['confine.v.03', 'control.v.02', 'hold.v.36']
 
-    # vertices = {'A':-1,
-    #             'B':-1,
-    #             'C':-1,
-    #             'D':-1,
-    #             'E':-1,
-    #             'F':-1}
-    # edges = {'A':['B','C'],
-    #          'B':[],
-    #          'C':[],
-    #          'D':['C', 'E'],
-    #          'E':[],
-    #          'F':['B', 'A', 'D']}
+    vertices = {'A':-1,
+                'B':-1,
+                'C':-1,
+                'D':-1,
+                'E':-1,
+                'F':-1}
+    edges = {'A':['B','C'],
+             'B':[],
+             'C':[],
+             'D':['C', 'E'],
+             'E':[],
+             'F':['B', 'A', 'D']}
 
     print('CALCULATING...')
 
     gr = Graph(vertices, edges)
     gr.compute_degree()
+    gr.to_csv('mots_avec_leurs_degré')
+    gr.save()
     a = gr.get_ordoned_vertices()
     print(a[0])
