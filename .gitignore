@@ -3,6 +3,6 @@ Documents/*
 .idea/*
 *_test.py
 *.pkl
-mots.txt
+dict.txt
 __pycache__
 *.png
