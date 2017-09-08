@@ -1,17 +1,17 @@
-hoot,hululer;mugir,104.5154491713458,0,1
+well_up,monter,104.5154491713458,0,1
 whimper,geindre,104.5154491713458,0,1
 beneath_him,indigne de,104.5154491713458,0,1
 toss,jeter,104.5154491713458,0,1
 sidelong,oblique;de coté,104.5154491713458,0,1
 forth,en_avant,104.5154491713458,0,1
-hilt,garde,57.46370697554741,2,0
 tore,démolir,104.5154491713458,0,1
 glimpse,entrevoir;entrapercevoir,104.5154491713458,0,1
 beyond,au-dela,104.5154491713458,0,1
 among,entre;parmi,104.5154491713458,0,1
 hood,capuchon;capuche,104.5154491713458,0,1
 chill,froid;frisson,104.5154491713458,0,1
-well_up,monter,104.5154491713458,0,1
+hoot,hululer;mugir,104.5154491713458,0,1
+well,puit,104.5154491713458,0,1
 wide,large;vaste,102.2996891435279,0,2
 stir,remuer;agiter;émouvoir,102.2996891435279,0,2
 delight,joie;avec_joie;grand_plaisir,100.0,0,0
@@ -83,7 +83,6 @@ kennel,chenil;niche,87.06596335622918,1,0
 toss off,expédier,87.06596335622918,1,0
 send_forth,envoyer,87.06596335622918,1,0
 hinted,insinuer,87.06596335622918,1,0
-well,puit,104.5154491713458,0,1
 rear,arrière,87.06596335622918,1,0
 across,par_dela;de l'autre coté;en travers,87.06596335622918,1,0
 damp,humide,87.06596335622918,1,0
@@ -96,3 +95,4 @@ prickle,piquant;picottement,87.06596335622918,1,0
 slipped,glissa,87.06596335622918,1,0
 billowing,flottant,87.06596335622918,1,0
 pant_for,vouloir;mourrir d'envie;vouloir_vraiment,82.91525994610632,1,2
+hilt,garde,57.46370697554741,2,0

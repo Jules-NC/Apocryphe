@@ -5,16 +5,16 @@ Created on Sat Aug 19 20:46:41 2017
 @author: Lambyor
 """
 # IMPORTATIONS
-# TODO comprendre les erreurs d'importations
-from utils import *    # Gère la séléction et la validité du test et d'autres trucs
+# TODO: emplacement des fichiers
+from utils.misc import *    # Gère la séléction et la validité du test et d'autres trucs
 import random
 import csv
 import sys
 
 
 # VARIABLES GLOBALES
-FICHIER = "./dict.txt"
-IMPORTATION = "./mots.txt"    # TODO DEGEULASSE, utilisé dans IMO !
+FICHIER = "dict.txt"
+IMPORTATION = "./mots.txt"
 AFFICHAGE = False   # You can visualize bad and gud number of each lethe in LMAO with this TODO: RETIRER !
 
 

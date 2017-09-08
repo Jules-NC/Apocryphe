@@ -22,7 +22,7 @@ def is_cyclic(g):   # O(E + V)
 
 def construct_filename(folder='Misc', filename='dummy', extension='txt'):
     now = datetime.datetime.now()
-    folder = './Documents/' + folder + '/'
+    folder = 'Documents/' + folder + '/'
     date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
     filename = folder + filename + date + '.' + extension
     return filename
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
     gr = Graph(vertices, edges)
     gr.compute_degree()
-    gr.to_csv('mots_avec_leurs_degré')
-    gr.save()
+    #gr.to_csv('mots_avec_leurs_degré')     # TODO: régler cette probleme d'emplacement des fichiers
+    #gr.save()
     a = gr.get_ordoned_vertices()
     print(a[0])
