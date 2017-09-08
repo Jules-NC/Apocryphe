@@ -15,8 +15,8 @@ import sys
 
 
 # VARIABLES GLOBALES
-FICHIER = "dict.txt"
-IMPORTATION = "./mots.txt"
+FICHIER = "./ressources/dict.txt"
+IMPORTATION = "./ressources/mots.txt"
 AFFICHAGE = False   # You can visualize bad and gud number of each lethe in LMAO with this TODO: RETIRER !
 
 
