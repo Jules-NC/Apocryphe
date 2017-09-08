@@ -6,7 +6,9 @@ Created on Sat Aug 19 20:46:41 2017
 """
 # IMPORTATIONS
 # TODO: emplacement des fichiers
-from utils.misc import *    # Gère la séléction et la validité du test et d'autres trucs
+from utils.word_analysis import levenshtein_list    # Gère la séléction et la validité du test et d'autres trucs
+from utils.math_tools import maxf   # permet de set la valeur de pds
+from utils.misc import regulate     #Limite la valeur de x entre a et b
 import random
 import csv
 import sys

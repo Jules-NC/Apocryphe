@@ -12,50 +12,6 @@ import numpy as np
 import math
 
 
-def levenshtein(source, tg):    # UTSUKUSHI DESU DESU MOTTO MOTTO NOTICE ME SEMPAI
-    if len(source) < len(tg):
-        return levenshtein(tg, source)
-    if len(tg) == 0:
-        return len(source)
-    source = np.array(tuple(source))
-    tg = np.array(tuple(tg))
-    p_r = np.arange(tg.size + 1)
-    for s in source:
-        c_r = p_r + 1
-        c_r[1:] = np.minimum(c_r[1:], np.add(p_r[:-1], tg != s))
-        c_r[1:] = np.minimum(c_r[1:], c_r[0:-1] + 1)
-        p_r = c_r
-    return p_r[-1]
-
-
-def levenshtein_list(l, tg):
-    try:
-        return min([levenshtein(e, tg) for e in l])
-    except ValueError:
-        return 100
-
-
-def gauss(x, y, s, maximum=100, x0=0, y0=0, sx=1.0, sy=1.0):
-    # Oui des librairies font ca très bien
-    # ...
-    # ...
-    # ...
-    # MAIS J'AI PAS LE TEMPS
-    # Mot-Dièse MADLAB !
-    return maximum * math.exp(-((x - x0) ** 2 / (2 * sx ** 2) + (y - y0) ** 2 / (2 * sy ** 2))) + 8.3 * s
-
-
-def maxf(x, y, s):
-    """
-    >>> max(0,0,0)
-    100
-    """
-    # C'est lethe_list'histoire d'un bloc dont on oubliera la signification...
-    return max(gauss(x, y, s, 100, 0, 0, 3.6, 1.9), 
-               gauss(x, y, s, 100, 10, 0, 4.5, 3.75), 
-               gauss(x, y, s, 100, 20, 0, 6.4, 7.8))
-
-
 def regulate(value, min_value, max_value):    # TODO descritption
     # Assert est très très très utile la !
     assert min_value < max_value
@@ -84,7 +40,5 @@ def import_file(ca_sert_a_quoi_ce_parametre_wtf=False):    # UN PEU DE LA MERDE,
 
 if __name__ == '__main__':
 
-    print(maxf(20, 0, 9))
-    a = ["manger", "mangea", "mangaient"]
     import_file(True)    # True si oui #Tautologie
     pass
