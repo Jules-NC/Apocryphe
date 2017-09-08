@@ -1,18 +1,19 @@
 # coding: utf-8
 """
-Provides Graph object. You can do fun things and export this graph to gephi
-
-FLEMME DE COMMENTER
+Provides Graph object. You can do fun things and export this graph to gephi (if you want)
+For complexity, V is the number of vertices and E the number of Edges
 """
+import pickle
 
-def is_cyclic(g):    # Say what you think O(E + V)
+
+def is_cyclic(g):   # O(E + V)
     path = set()
 
     def visit(vertex):
         path.add(vertex)
         for neighbour in g.get(vertex, ()):
             if neighbour in path or visit(neighbour):
-                print(neighbour)    # Beouty
+                print(neighbour)    # NoBeouty
                 return True
         path.remove(vertex)
         return False
@@ -24,12 +25,14 @@ class Graph:  # O(1)
         self.vertices = vertices
         self.edges = edges
         self._it = 0    # For memory and complexity verification
-        self.compute_type = None    #None for none, True for degree, False for summing
+        self.compute_type = None    # None for none, True for degree, False for summing
 
     def is_cyclic(self):
         return is_cyclic(self.edges)
 
-    def compute_degree(self):   # O(E)
+    def compute_degree(self):   # O(V)
+        if self.is_cyclic() is True:
+            raise Exception('GraphEror', 'The graph is cyclic !')
         self.compute_type = True
         for k in self.vertices.keys():
             if self.vertices[k] == -1:
@@ -47,7 +50,10 @@ class Graph:  # O(1)
         self.vertices[vertice] = res
         return res
 
-    def compute_summing(self):
+    def compute_summing(self):    # O(V)
+        if self.is_cyclic() is True:
+            raise Exception('GraphEror', 'The graph is cyclic !')
+
         self.compute_type = False
         for k in self.vertices.keys():
             if self.vertices[k] == -1:
@@ -61,22 +67,27 @@ class Graph:  # O(1)
         res = 0
         for vert in edges:
             if self.vertices[vert] != -1:
-               res += self.vertices[vert]
+                res += self.vertices[vert]
             else:
                 res += self.summing(vert, self.edges[vert])
         res += 1
         self.vertices[vertice] = res
         return res
 
-    def invert(self):
+    def invert(self): #TODO comprendre ce truc
         self.reset_compute()
-        new_edges = {source:[] for source in self.vertices.keys()}
+        new_edges = {source: [] for source in self.vertices.keys()}
         for source in self.vertices.keys():
             for target in self.edges[source]:
                 new_edges[target].append(source)
         self.edges = new_edges
 
-    def reset_compute(self):
+    def get_ordoned_vertices(self):    # O(2V)
+        inv_map = [[v, k] for v, k in self.vertices.items()]
+        inv_map.sort(key=lambda x: x[1], reverse=True)
+        return inv_map
+
+    def reset_compute(self):    # O(V)
         for vertice in self.vertices.keys():
             self.vertices[vertice] = -1
 
@@ -92,21 +103,29 @@ class Graph:  # O(1)
                 self.summing(a, self.edges[a])
 
     def delete_edge(self, a, b):
-        if self.vertices.get(a) is None: return
+        if self.vertices.get(a) is None:
+            return
         if b in self.edges[a]:
             self.edges[a].remove(b)
 
     def view(self):
         print('=====[GRAPH]=====')
         for key in self.vertices.keys():
-            print(str(key), '(', self.vertices[key], ") => ", self.edges[key], sep ="")
+            print(str(key), '(', self.vertices[key], ") => ", self.edges[key], sep="")
         print('======[END]======')
 
-    @staticmethod
-    def to_csv(file='./graph/graph1.csv'):
+    def to_csv(self, file='./Graphs/graph1.csv'):   # O(2V)
+        edges = ((str(source), str(target), str(self.vertices[source]))     # Source/Target/Computed_value
+                 for source in self.vertices for target in self.edges[source])
+
         with open(file, 'w') as f:
-            f.write('Source,Target\n')
-            # TODO le CSVage
+            f.write("Source,Target,Idk" + '\n')
+            for edge in edges:
+                f.write(edge[0] + ',' + edge[1] + ',' + edge[2] + '\n')
+
+    def save(self, file='graph1.pkl'):    # O(sef)
+        with open(file, 'wb') as f:
+            pickle.dump(self, f)
 
 if __name__ == '__main__':
 
@@ -132,18 +151,6 @@ if __name__ == '__main__':
     print('CALCULATING...')
 
     gr = Graph(vertices, edges)
-    gr.compute_summing()
-
-    inv_map = [[v,k] for k, v in gr.vertices.items()]
-    inv_map.sort()
-    for e in inv_map:
-        print(e)
-
-    """
-
-    print("POIDS: ", a)
-    print('MaxPds:', max(a))
-    print('Excepted IT:', len(vertices.keys()) == gr._it)
-    print("FINISHED !")
-
-    """
+    gr.compute_degree()
+    a = gr.get_ordoned_vertices()
+    print(a[0])
