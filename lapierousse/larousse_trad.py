@@ -6,24 +6,32 @@ import urllib.request
 class MyHTMLParser(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.trad_content = False
+        self.content = False
+        self.indent = ''
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'article_bilingue':
-            self.trad_content == True
-        #print("<< Trouvé balise ouvrante :", tag)
+        if len(attrs) is not 0:
+            if 'article_bilingue' in attrs[0]:
+                self.content = True
+        if self.content:
+            self.indent += '    '
+            print(self.indent, '<', tag, '>', attrs, sep='')
 
     def handle_endtag(self, tag):
-        #print(">> Trouvé balise fermante :", tag)
-        pass
+        if self.content and tag == 'div':
+            self.content = False
+        elif self.content:
+            print(self.indent, '</', tag, '>', '\n', sep='')
+            self.indent = self.indent[:-4]
 
     def handle_data(self, data):
-        if self.trad_content:
-            if data.strip(): print("    Trouvé contenu  :", data)
-        pass
+        if self.content:
+            if len(data.strip()) is not 0:
+                print(self.indent, '|=>', data.strip(), '<=|', sep='')
+
+
 
 parser = MyHTMLParser()
 u = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/rear')
 data = u.read().decode('utf8')
 parser.feed(data)
-
