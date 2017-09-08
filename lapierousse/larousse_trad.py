@@ -6,16 +6,21 @@ import urllib.request
 class MyHTMLParser(HTMLParser):
     def __init__(self):
         super().__init__()
-        in_trad_content = False
+        self.trad_content = False
 
     def handle_starttag(self, tag, attrs):
-        print("<< Trouvé balise ouvrante :", tag)
+        if tag == 'article_bilingue':
+            self.trad_content == True
+        #print("<< Trouvé balise ouvrante :", tag)
 
     def handle_endtag(self, tag):
-        print(">> Trouvé balise fermante :", tag)
+        #print(">> Trouvé balise fermante :", tag)
+        pass
 
     def handle_data(self, data):
-        if data.strip(): print("    Trouvé contenu  :", data)
+        if self.trad_content:
+            if data.strip(): print("    Trouvé contenu  :", data)
+        pass
 
 parser = MyHTMLParser()
 u = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/rear')
