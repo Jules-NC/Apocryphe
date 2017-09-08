@@ -15,14 +15,14 @@ def clrScreen(i):
     for a in range(i): 
         print()
 
-def sysPrint(titre, contenu, a=True):
+def sys_print(titre, contenu, a=True):
     clrScreen(1)
     if(a == True): color = 'green'; back = 'on_cyan'
     else: color = 'red'; back = 'on_red'
     print(colored("======[" + titre.upper() + "]======", 'white', back, attrs=['bold', 'underline']))
     print(colored(contenu, color))
 
-def linePrint(contenu ,a = None):
+def line_print(contenu, a = None):   # TODO renommer ca bien (faire att a ROLF qui en utilise beaucoup)
     if(a == True): color = 'white'; back = 'on_green'
     elif (a == False): color = 'white'; back = 'on_red'
     else: color = 'white'; back = 'on_grey'
@@ -59,16 +59,16 @@ def command(texte, apo, lethe): #CA J'AIME ! OUI J'AIME CA ! OH OUI ! ANNNNNHH !
 
     commands = {
         'add':apo.add,
-        'addS':apo.addSens,
+        'addS':apo.add_sens,
         'del':apo.delete,
-        'delS':apo.delSens,
-        'print':apo.sprint, 
+        'delS':apo.del_sens,
+        'print':apo.sorted_print,
         'quit':apo.quit,
         'reset':apo.reset,
         'save':apo.save,
         'sort':apo.sort,
-        'sorta':apo.sortA,
-        'squit':apo.sQuit,
+        'sorta':apo.sort_alphabetical,
+        'squit':apo.s_quit,
         'unlock':apo.unlock,
         'lock': lethe.lock
         }
@@ -85,16 +85,16 @@ def command(texte, apo, lethe): #CA J'AIME ! OUI J'AIME CA ! OH OUI ! ANNNNNHH !
         }
     try:
         a = commands.get(clef)(base, acide)
-        #sysPrint("AHAH",str(base) +'|'+str(acide), True)
+        #sys_print("AHAH",str(base) +'|'+str(acide), True)
     except TypeError:
-        sysPrint("commande non trouvée",
+        sys_print("commande non trouvée",
                   "Tapez /help pour une liste des commandes",
                   False)
         a = None
     if a == False:
-        sysPrint(erreurs.get(clef)[0], erreurs.get(clef)[1], False)
+        sys_print(erreurs.get(clef)[0], erreurs.get(clef)[1], False)
     elif a == True:
-        sysPrint(clef, 'Opération réussie')
+        sys_print(clef, 'Opération réussie')
 
 if __name__ == '__main__':
     print(colored('hello', 'cyan','on_blue'), colored('world', 'cyan','on_red'))

@@ -4,3 +4,5 @@ Documents/*
 *_test.py
 *.pkl
 mots.txt
+__pycache__
+*.png
