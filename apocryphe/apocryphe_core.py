@@ -6,7 +6,7 @@ Created on Sat Aug 19 20:46:41 2017
 """
 # IMPORTATIONS
 # TODO comprendre les erreurs d'importations
-from IMO import *    # Gère la séléction et la validité du test et d'autres trucs
+from utils import *    # Gère la séléction et la validité du test et d'autres trucs
 import random
 import csv
 import sys
@@ -19,11 +19,20 @@ AFFICHAGE = False   # You can visualize bad and gud number of each lethe in LMAO
 
 
 class Apocryphe:
+    """It's just a List of Lethes but with a name and some methods
+
+    All the functions with *useless or unused parameters are for a wierd thing, for a call in LMAO.
+    I will change this. Because it's 'dégeulasse'
+    """
     def __init__(self):
         self.lethe_list = to_lethe_list(FICHIER)
         self.sort()
 
     def select(self):   # le select est celui en 1er
+        """Return the first element in sef.lethe_list after a random
+
+        The random is done withe the random_pond function, ponderate with the pds
+        """
         chosen_indice = random_pond(self.to_pds())
         if chosen_indice == 0:
             self.lethe_list[0].pds = self.lethe_list[1].pds - 1

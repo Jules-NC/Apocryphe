@@ -8,7 +8,7 @@ Flèche solaire (quoique ca veuille dure)
 from pycallgraph.output import GraphvizOutput   # TODO vérifier les importations
 from pycallgraph import PyCallGraph
 from termcolor import colored
-from ROLF import *
+from apocryphe_core import *
 
 
 def clr_screen(i):

@@ -7,7 +7,7 @@ CC LEVENSTHEIN TO WIKIPEDIA ALGORITHM
 
 Ah oui j'ai voulu mettre des tests mais en fait c'est chiant alors si vous voulez modifier bah bonne chance. 
 """
-from ROLF import *
+from apocryphe_core import *
 import numpy as np
 import math
 

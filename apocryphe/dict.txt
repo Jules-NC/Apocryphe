@@ -1,10 +1,10 @@
-well,puit,104.5154491713458,0,1
+hoot,hululer;mugir,104.5154491713458,0,1
 whimper,geindre,104.5154491713458,0,1
 beneath_him,indigne de,104.5154491713458,0,1
 toss,jeter,104.5154491713458,0,1
 sidelong,oblique;de coté,104.5154491713458,0,1
 forth,en_avant,104.5154491713458,0,1
-hoot,hululer;mugir,104.5154491713458,0,1
+hilt,garde,57.46370697554741,2,0
 tore,démolir,104.5154491713458,0,1
 glimpse,entrevoir;entrapercevoir,104.5154491713458,0,1
 beyond,au-dela,104.5154491713458,0,1
@@ -83,7 +83,7 @@ kennel,chenil;niche,87.06596335622918,1,0
 toss off,expédier,87.06596335622918,1,0
 send_forth,envoyer,87.06596335622918,1,0
 hinted,insinuer,87.06596335622918,1,0
-hilt,garde,87.06596335622918,1,0
+well,puit,104.5154491713458,0,1
 rear,arrière,87.06596335622918,1,0
 across,par_dela;de l'autre coté;en travers,87.06596335622918,1,0
 damp,humide,87.06596335622918,1,0
