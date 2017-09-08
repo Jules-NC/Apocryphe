@@ -15,7 +15,7 @@ import sys
 
 # VARIABLES GLOBALES
 FICHIER = "./dict.txt"
-IMPORTATION = "./mots.txt"
+IMPORTATION = "./mots.txt"    # TODO DEGEULASSE, utilisé dans IMO !
 AFFICHAGE = False
 
 
@@ -199,7 +199,7 @@ class Lethe:
     def test(self, t):    #LOL C BON
         if(AFFICHAGE): line_print("GUD: " + str(self.gud) + " ")
         if(AFFICHAGE): line_print("BAD: " + str(self.bad) + " ")
-        if (levenshteinList(self.fr, t) <= 3):
+        if (levenshtein_list(self.fr, t) <= 3):
             self.add_gud(1)
             self.add_row(True)
             self.set_pds(maxf(self.bad, self.gud, self.row)) #LOL COD DE MERD

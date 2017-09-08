@@ -1,5 +1,4 @@
-chill,froid;frisson,104.5154491713458,0,1
-well_up,monter,104.5154491713458,0,1
+wide,large;vaste,102.2996891435279,0,2
 well,puit,104.5154491713458,0,1
 whimper,geindre,104.5154491713458,0,1
 beneath_him,indigne de,104.5154491713458,0,1
@@ -12,8 +11,10 @@ glimpse,entrevoir;entrapercevoir,104.5154491713458,0,1
 beyond,au-dela,104.5154491713458,0,1
 among,entre;parmi,104.5154491713458,0,1
 hood,capuchon;capuche,104.5154491713458,0,1
-wide,large;vaste,102.2996891435279,0,2
+chill,froid;frisson,104.5154491713458,0,1
+delight,joie;avec_joie;grand_plaisir,100.0,0,0
 stir,remuer;agiter;émouvoir,102.2996891435279,0,2
+rag,chiffon;lambeaux;chiffonner,100.0,0,0
 broad,large,100.0,0,0
 slink,furif;furtivement,100.0,0,0
 glances,coup d'oeuil,100.0,0,0
@@ -32,7 +33,6 @@ anger,colere;fureur,100.0,0,0
 grasp at,saisir l'occasion,100.0,0,0
 moleskin,velours;coton;soie,100.0,0,0
 from this moment forth,a partir d'aujourd'hui;dorénavant,100.0,0,0
-kennel,chenil;niche,100.0,0,0
 crispness,craquant,100.0,0,0
 pant,haleter,100.0,0,0
 warily,prudemment,100.0,0,0
@@ -42,7 +42,7 @@ snatch,prendre_vite;saisir vite;attraper_vite,100.0,0,0
 at a glance,en un coup d'oeuil,100.0,0,0
 shone,eclairer;briller,100.0,0,0
 to have something in one's grasp,avoir prise,100.0,0,0
-delight,joie;avec_joie;grand_plaisir,100.0,0,0
+well_up,monter,104.5154491713458,0,1
 sap,seve,100.0,0,0
 gaunt,émacié;décharné;morne;lugubre,100.0,0,0
 greasy,gras;graisse,100.0,0,0
@@ -72,7 +72,6 @@ mutter,marmonner;gromeller,100.0,0,0
 tatter,lambeau,100.0,0,0
 bring_forth,produire,100.0,0,0
 dawned,aube;naissance_civilisation,100.0,0,0
-rag,chiffon;lambeaux;chiffonner,100.0,0,0
 flinch,tressaillir,100.0,0,0
 crust,croute,100.0,0,0
 bolting,emballer;s'emballer;déguerpir;précipiter,100.0,0,0
@@ -80,6 +79,7 @@ tear away,enlever;arracher,100.0,0,0
 grim,sévère;sinistre,100.0,0,0
 cradling,berceau,93.99968914352789,0,2
 grope,tatonner,92.07090771855525,1,1
+kennel,chenil;niche,87.06596335622918,1,0
 toss off,expédier,87.06596335622918,1,0
 send_forth,envoyer,87.06596335622918,1,0
 hinted,insinuer,87.06596335622918,1,0
