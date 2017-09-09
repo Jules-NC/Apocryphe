@@ -22,7 +22,7 @@ def is_cyclic(g):   # O(E + V)
 
 def construct_filename(folder='Misc', filename='dummy', extension='txt'):
     now = datetime.datetime.now()
-    folder = '../ressources/' + folder + '/'
+    folder = '..ou/ressources/' + folder + '/'
     date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
     filename = folder + filename + date + '.' + extension
     return filename
