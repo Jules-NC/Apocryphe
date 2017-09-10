@@ -23,7 +23,7 @@ class LSynsets:
     def __str__(self):
         res = ''
         for synset in self.synsets:
-            res += str(synset) + '\n|===========================================================|\n'
+            res += str(synset) + '\n|========================================|\n'
         return res
 
 
@@ -45,7 +45,6 @@ class LSynset:
     def add_traduction(self, new_traduction, new_metadatas):  # new_metadata is a tuple, with 3 arguments
         try:
             self.last_meaning().traduction.append(Traduction(*new_traduction, Metadatas(*new_metadatas)))
-            print("Ajout traduction")
         except AttributeError:  # If last meaning doesn't exist
             pass
             #raise AttributeError  # TODO: delete this error test line
@@ -59,9 +58,6 @@ class LSynset:
             raise AttributeError  # TODO: delete this error test line
             # return    TODO: remove commentary after removed precedent line
 
-    def traduction(self):
-        return [meaning.traduction.raw for meaning in self.meanings if len(meaning.traduction) is not 0]
-
     def __str__(self):
         means = ''
         for meaning in self.meanings:
@@ -71,22 +67,19 @@ class LSynset:
 
 class Meaning:  # Will be modified => not a tuple
     def __init__(self, new_number):
-        self.number = new_number
+        self.number = new_number[:-1]
         self.traductions = []
         self.examples = []
 
     def __str__(self):
-        num = self.number
-        trad = ''
+        num = '  =>(' + self.number + ')'
+        trad = '    |'
         for traduction in self.traductions:
-            met = traduction.metadatas.domain + traduction.metadatas.metalang + traduction.metadatas.category
-            trad += '(' + met + ')' + str(traduction) + '\n'
-        ex = ''
+            trad += str(traduction) + '\n' # traduction can be None
+        ex = '    |'
         for example in self.examples:
-            met = str(traduction.metadatas.domain) + str(traduction.metadatas.metalang) + \
-                  str(traduction.metadatas.category)
-            ex += '(' + met + ')' + str(example.raw) + '=>' + str(example.trad) + '\n'
-        return num + ':\n' + trad + ex
+            ex +=  str(example) + '\n'
+        return num + ':\n' + trad + ex + '\n'
 
 
 Example = namedtuple('Example', ['raw', 'trad', 'metadatas'])
@@ -96,3 +89,15 @@ Traduction = namedtuple('Traduction', ['raw', 'metadatas'])    # Will not be cha
 
 
 Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will not be changed => tuple
+
+if __name__ == '__main__':
+    met1 = Metadatas("J'AIME LES PATES AU FROMAGE", None, None)
+    ex = Example('english phrase you see ojk ?', 'Phrase anglaise capich ?', met1)
+
+    met2 = Metadatas(None, None, 'Lol')
+    trad = Traduction('bitch dick', met2)
+    a = Meaning('0.')
+    a.traductions.append(trad)
+    a.examples.append(ex)
+
+    print(a)

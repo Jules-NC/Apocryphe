@@ -16,9 +16,11 @@ class LarousseParser:
         self.metalang = None  # (example)
         self.category_indicator = None  # [example]
 
-        for l in self.lines:
-            print(l)
-        #print(len(self.lines))  # TODO: retirer cette ligne
+        #for l in self.lines:   # TODO: enlever ca sert plus à rien
+            #print(l)
+
+    def add_urgent_meaning(self):
+        self.l_synsets.last_synset().add_number('0.')
 
     def reset_metadatas(self):
         self.domain_indicator = None
@@ -36,18 +38,15 @@ class LarousseParser:
             if 'Adresse' in line:
                 name = data(self.lines, line_number)
                 self.l_synsets.add_synset(LSynset(name))
-                print('Creat° Synset:', name)
 
             # number => new Meaning(number)
             elif 'numero' in line:
                 number = data(self.lines, line_number, 2)
                 self.l_synsets.last_synset().add_number(number)
-                print('Ajout nombre:', number)
 
             elif 'CategorieGrammaticale' in line and self.in_td is not True:
                 gram_category = data(self.lines, line_number, 1)  # TODO: 1., 2., 5. rectification to int
                 self.l_synsets.last_synset().gramatical_category = gram_category
-                print("Ajout Catégorie grammaticale:", gram_category)
 
             elif 'IndicateurDomaine' in line:  # TODO: vérifier si ces 2 conditions doivent être dans cet ordre
                 self.domain_indicator = data(self.lines, line_number)
@@ -57,26 +56,26 @@ class LarousseParser:
                 self.metalang = data(self.lines, line_number)
 
             elif 'lienarticle2' in line:
+                if len(self.l_synsets.last_synset().meanings) is 0:
+                    self.add_urgent_meaning()
                 traduction = data(self.lines, line_number)
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
                 self.l_synsets.last_synset().add_traduction(traduction, metadatas)
-                print("Ajout traduction:", traduction)
-                print("            |met:", metadatas)
                 self.reset_metadatas()
 
             elif 'Locution2' in line:
                 self.example_raw = data(self.lines, line_number)
             elif 'Traduction2' in line:
+                if len(self.l_synsets.last_synset().meanings) is 0:
+                    self.add_urgent_meaning()
                 example_trad = data(self.lines, line_number)
                 trad = (self.example_raw, example_trad)
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)
                 self.l_synsets.last_synset().add_traduction(trad, metadatas)
-                print("Ajout exemple:", self.example_raw, '==>', example_trad)
-                print("            |met:", metadatas)
                 self.example_raw = None
                 self.reset_metadatas()
 
-        print(self.l_synsets.synsets[0].gramatical_category)
+        return self.l_synsets
 
 
 def data(your_list, line_number, offset=1):
@@ -90,4 +89,4 @@ if __name__ == '__main__':
 
     "ACCES AUX SITE.."
     parser = LarousseParser(raw_data)
-    parser.feed()
+    print(parser.feed())
