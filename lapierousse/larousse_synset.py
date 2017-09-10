@@ -45,6 +45,7 @@ class LSynset:
     def add_traduction(self, new_traduction, new_metadatas):  # new_metadata is a tuple, with 3 arguments
         try:
             self.last_meaning().traduction.append(Traduction(*new_traduction, Metadatas(*new_metadatas)))
+            print("Ajout traduction")
         except AttributeError:  # If last meaning doesn't exist
             pass
             #raise AttributeError  # TODO: delete this error test line
@@ -53,6 +54,7 @@ class LSynset:
     def add_example(self, new_example, new_metadatas):  # new_metadatas is a tuple, with 3 arguments
         try:
             self.last_meaning().examples.append(Example(new_example, Metadatas(*new_metadatas)))
+            print("Ajout example")
         except AttributeError:  # If last meaning doesn't exist
             raise AttributeError  # TODO: delete this error test line
             # return    TODO: remove commentary after removed precedent line

@@ -6,18 +6,11 @@ from larousse_synset import *
 
 class LarousseParser:
     def __init__(self, text):
+        self.in_td = False
         self.lines = [line.strip() for line in text.split('\n')]
         self.l_synsets = LSynsets()
-        self.in_td = False
-
-        # Informations utiles
-        # self.name = None
-        # self.categorie_grammaticale = None
-        # self.number = None
-        #self.traductions = None
 
         self.example_raw = None
-        #self.example_trad = None
 
         self.domain_indicator = None  # EXAMPLE
         self.metalang = None  # (example)
@@ -25,17 +18,18 @@ class LarousseParser:
 
         for l in self.lines:
             print(l)
-        print(len(self.lines))  # TODO: retirer cette ligne
+        #print(len(self.lines))  # TODO: retirer cette ligne
 
     def reset_metadatas(self):
         self.domain_indicator = None
         self.metalang = None
         self.category_indicator = None
+
     def feed(self):
         for line_number, line in enumerate(self.lines):
-            if line == '<td>':  # For categoty
+            if '<td' in line:  # For categoty
                 self.in_td = True
-            elif line == '</td>':  # Idem
+            elif '/td' in line:  # Idem
                 self.in_td = False
 
             # Adresse => new LarousseSynset(name)
@@ -44,16 +38,16 @@ class LarousseParser:
                 self.l_synsets.add_synset(LSynset(name))
                 print('Creat° Synset:', name)
 
-
             # number => new Meaning(number)
-            elif 'number' in line:
+            elif 'numero' in line:
                 number = data(self.lines, line_number, 2)
                 self.l_synsets.last_synset().add_number(number)
-                print('Ajout nombre', number)
+                print('Ajout nombre:', number)
 
-            elif 'CategorieFrammaticale' in line and not self.in_td:
+            elif 'CategorieGrammaticale' in line and self.in_td is not True:
                 gram_category = data(self.lines, line_number, 1)  # TODO: 1., 2., 5. rectification to int
                 self.l_synsets.last_synset().gramatical_category = gram_category
+                print("Ajout Catégorie grammaticale:", gram_category)
 
             elif 'IndicateurDomaine' in line:  # TODO: vérifier si ces 2 conditions doivent être dans cet ordre
                 self.domain_indicator = data(self.lines, line_number)
@@ -66,6 +60,8 @@ class LarousseParser:
                 traduction = data(self.lines, line_number)
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
                 self.l_synsets.last_synset().add_traduction(traduction, metadatas)
+                print("Ajout traduction:", traduction)
+                print("            |met:", metadatas)
                 self.reset_metadatas()
 
             elif 'Locution2' in line:
@@ -75,6 +71,8 @@ class LarousseParser:
                 trad = (self.example_raw, example_trad)
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)
                 self.l_synsets.last_synset().add_traduction(trad, metadatas)
+                print("Ajout exemple:", self.example_raw, '==>', example_trad)
+                print("            |met:", metadatas)
                 self.example_raw = None
                 self.reset_metadatas()
 
@@ -86,8 +84,10 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/cradle')
+    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/rear')
     raw_data = raw_data.read().decode('utf8')
     raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
+
+    "ACCES AUX SITE.."
     parser = LarousseParser(raw_data)
     parser.feed()
