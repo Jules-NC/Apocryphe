@@ -23,7 +23,7 @@ class LSynsets:
     def __str__(self):
         res = ''
         for synset in self.synsets:
-            res += str(synset) + '\n|========================================|\n'
+            res += str(synset) + '\n'
         return res
 
 
@@ -52,7 +52,7 @@ class LSynset:
         means = ''
         for meaning in self.meanings:
             means += str(meaning)
-        return str(self.name) + '\n' + self.gramatical_category + '\n' + str(means)
+        return str(self.name.upper()) + '\n' + self.gramatical_category + '\n' + str(means)
 
 
 class Meaning:  # Will be modified => not a tuple
@@ -65,10 +65,13 @@ class Meaning:  # Will be modified => not a tuple
         num = '  =>(' + self.number + ')'
         traduct = ''
         for traduction in self.traductions:
-            traduct += '    |' + str(traduction) + '\n'  # traduction can be None
+            traduct += '    |' + '(' + str(traduction.metadatas.domain) + ', ' + str(traduction.metadatas.metalang) +\
+                       ' , '+ str(traduction.metadatas.category) + ') ' + str(traduction.raw) +'\n'
         examp = ''
         for example in self.examples:
-            examp += '    {' + str(example) + '\n'
+            examp += '    {' + '(' + str(example.metadatas.domain) + ', ' + str(example.metadatas.metalang) +\
+                       ' , '+ str(example.metadatas.category) + ') ' + str(example.raw) + ' ==> ' + str(example.trad)\
+                     + '\n'
         return num + ':\n' + traduct + examp + '\n'
 
 

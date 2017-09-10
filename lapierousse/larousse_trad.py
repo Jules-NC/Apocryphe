@@ -80,10 +80,10 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/rear')
+    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/as')
     raw_data = raw_data.read().decode('utf8')
     raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 
-    "ACCES AUX SITE.."
+    print("ACCES AUX SITE..")
     parser = LarousseParser(raw_data)
     print(parser.feed())
