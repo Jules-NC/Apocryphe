@@ -16,7 +16,6 @@ class LSynsets:
     def last_synset(self):
         return self.synsets[-1]
 
-
     def __str__(self):
         res = ''
         for synset in self.synsets:
@@ -63,11 +62,11 @@ class Meaning:  # Will be modified => not a tuple
         traduct = ''
         for traduction in self.traductions:
             traduct += '    |' + '(' + str(traduction.metadatas.domain) + ', ' + str(traduction.metadatas.metalang) +\
-                       ' , '+ str(traduction.metadatas.category) + ') ' + str(traduction.raw) +'\n'
+                       ' , ' + str(traduction.metadatas.category) + ') ' + str(traduction.raw) + '\n'
         examp = ''
         for example in self.examples:
             examp += '    {' + '(' + str(example.metadatas.domain) + ', ' + str(example.metadatas.metalang) +\
-                       ' , '+ str(example.metadatas.category) + ') ' + str(example.raw) + ' ==> ' + str(example.trad)\
+                       ' , ' + str(example.metadatas.category) + ') ' + str(example.raw) + ' ==> ' + str(example.trad)\
                      + '\n'
         return num + ':\n' + traduct + examp + '\n'
 
