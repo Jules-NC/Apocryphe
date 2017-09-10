@@ -1,5 +1,8 @@
 """LarousseSynset provide a good way to interprete Larousse.fr en-fr traductions and to convert them to a real good
-database"""
+database
+
+It's jsut a way to formalise data in larousse.fr pages
+"""
 
 
 class LarousseSynset:
@@ -31,6 +34,11 @@ class LarousseSynset:
         except AttributeError:  # If last meaning doesn't exist
             raise AttributeError  # TODO: delete this error test line
             # return    TODO: remove commentary after removed precedent line
+
+    def traduction(self):
+        return  [meaning.traduction for meaning in self.meanings if meaning.traduction is not None]
+
+
 
 
 class Meaning:
