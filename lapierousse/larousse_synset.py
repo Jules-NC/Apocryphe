@@ -43,20 +43,10 @@ class LSynset:
         self.meanings.append(new_meaning)
 
     def add_traduction(self, new_traduction, new_metadatas):  # new_metadata is a tuple, with 3 arguments
-        try:
-            self.last_meaning().traduction.append(Traduction(*new_traduction, Metadatas(*new_metadatas)))
-        except AttributeError:  # If last meaning doesn't exist
-            pass
-            #raise AttributeError  # TODO: delete this error test line
-            # return    TODO: remove commentary after removed precedent line
+        self.last_meaning().traductions.append(Traduction(new_traduction, Metadatas(*new_metadatas)))
 
     def add_example(self, new_example, new_metadatas):  # new_metadatas is a tuple, with 3 arguments
-        try:
-            self.last_meaning().examples.append(Example(new_example, Metadatas(*new_metadatas)))
-            print("Ajout example")
-        except AttributeError:  # If last meaning doesn't exist
-            raise AttributeError  # TODO: delete this error test line
-            # return    TODO: remove commentary after removed precedent line
+        self.last_meaning().examples.append(Example(new_example[0], new_example[1],  Metadatas(*new_metadatas)))
 
     def __str__(self):
         means = ''
@@ -73,12 +63,12 @@ class Meaning:  # Will be modified => not a tuple
 
     def __str__(self):
         num = '  =>(' + self.number + ')'
-        trad = '    |'
+        trad = ''
         for traduction in self.traductions:
-            trad += str(traduction) + '\n' # traduction can be None
-        ex = '    |'
+            trad += '    |' + str(traduction) + '\n' # traduction can be None
+        ex = ''
         for example in self.examples:
-            ex +=  str(example) + '\n'
+            ex +=  '    |' + str(example) + '\n'
         return num + ':\n' + trad + ex + '\n'
 
 
@@ -91,13 +81,18 @@ Traduction = namedtuple('Traduction', ['raw', 'metadatas'])    # Will not be cha
 Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will not be changed => tuple
 
 if __name__ == '__main__':
-    met1 = Metadatas("J'AIME LES PATES AU FROMAGE", None, None)
-    ex = Example('english phrase you see ojk ?', 'Phrase anglaise capich ?', met1)
 
-    met2 = Metadatas(None, None, 'Lol')
-    trad = Traduction('bitch dick', met2)
-    a = Meaning('0.')
-    a.traductions.append(trad)
-    a.examples.append(ex)
+    b = LSynset('NOM')  # Création LSynset
+    b.gramatical_category = 'nounent'  # On met ce paramètre
+    b.add_number('0')  # Création et ajout d'un Meaning dans le synset
 
-    print(a)
+    met1 = ("J'AIME LES PATES AU FROMAGE", None, None)
+    met2 = (None, None, 'Lol')
+
+    trad = Traduction('bitch dick', met1)
+    ex = ('english phrase you see ojk ?', 'Phrase anglaise capich ?', met1)
+
+    b.add_traduction(trad, met1)
+    b.add_example(ex, met2)
+
+    print(b)

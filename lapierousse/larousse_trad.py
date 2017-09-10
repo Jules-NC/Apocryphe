@@ -20,7 +20,7 @@ class LarousseParser:
             #print(l)
 
     def add_urgent_meaning(self):
-        self.l_synsets.last_synset().add_number('0.')
+        self.l_synsets.last_synset().add_number('1.')
 
     def reset_metadatas(self):
         self.domain_indicator = None
