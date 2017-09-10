@@ -42,6 +42,13 @@ class LarousseParser:
             if 'Adresse' in line:
                 name = data(self.lines, line_number)
                 self.l_synsets.add_synset(LSynset(name))
+                if self.l_synsets.last_synset() is not None:
+                    if self.l_synsets.last_synset().last_meaning() is not None:
+                        if len(self.l_synsets.last_synset().last_meaning.traductions) is 0 and len(
+                                self.l_synsets.last_synset().last_meaning().examples) is 0:
+                            print(
+                                "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+                            del self.l_synsets.synsets[-1]
 
             # number => new Meaning(number)
             elif 'numero' in line:

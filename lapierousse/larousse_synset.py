@@ -14,7 +14,10 @@ class LSynsets:
         self.synsets.append(synset)
 
     def last_synset(self):
-        return self.synsets[-1]
+        try:
+            return self.synsets[-1]
+        except Exception:
+            return None
 
     def __str__(self):
         res = ''
@@ -30,9 +33,11 @@ class LSynset:
         self.meanings = []
 
     def last_meaning(self):  # TODO: trouver utilité de ce truc
-        if len(self.meanings) is not 0:
-            return self.meanings[-1]
-        return None
+        try:
+            if len(self.meanings) is not 0:
+                return self.meanings[-1]
+        except Exception:
+            return None
 
     def add_number(self, new_number):
         new_meaning = Meaning(new_number)
