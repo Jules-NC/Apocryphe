@@ -154,7 +154,7 @@ class Lethe:
 
     Lethe contain many arguments:
     :arg en: The english word
-    :arg fr: The french traduction(s) of the word. It's a list
+    :arg fr: The french traductions(s) of the word. It's a list
     :arg pds: A value set by gaussian calculations
     :arg gud: Number of test failures
     :arg bad: Number of test success
