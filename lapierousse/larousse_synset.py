@@ -14,11 +14,8 @@ class LSynsets:
         self.synsets.append(synset)
 
     def last_synset(self):
-        try:
-            return self.synsets[-1]
-        except IndexError:
-            print("PAS DE DERNIER SYNSET")
-            raise IndexError  # TODO: à enlever après les tests
+        return self.synsets[-1]
+
 
     def __str__(self):
         res = ''
@@ -61,7 +58,7 @@ class Meaning:  # Will be modified => not a tuple
         self.traductions = []
         self.examples = []
 
-    def __str__(self):
+    def __str__(self):  # Weird code but beautiful print ^^
         num = '  =>(' + self.number + ')'
         traduct = ''
         for traduction in self.traductions:
@@ -83,7 +80,8 @@ Traduction = namedtuple('Traduction', ['raw', 'metadatas'])    # Will not be cha
 
 Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will not be changed => tuple
 
-if __name__ == '__main__':
+
+if __name__ == '__main__':  # TEST ONLY ! IT'S A MODULE !
 
     b = LSynset('NOM')  # Création LSynset
     b.gramatical_category = 'nounent'  # On met ce paramètre

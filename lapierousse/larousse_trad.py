@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup   # To get a beautifil string to the end. I don't use this module for something else.
 import urllib.request   # To get content from internet and use him with beautifulsoup4
 from larousse_synset import *
+import pickle   # Save datas to create a big database
 
 
 class LarousseParser:
@@ -80,10 +81,11 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/as')
+    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/tattered')
     raw_data = raw_data.read().decode('utf8')
     raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 
     print("ACCES AUX SITE..")
     parser = LarousseParser(raw_data)
-    print(parser.feed())
+    best_data_ever = parser.feed()
+    print(best_data_ever)
