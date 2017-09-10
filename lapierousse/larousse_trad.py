@@ -91,4 +91,4 @@ def data(your_list, line_number, offset=1):
 
 if __name__ == '__main__':
     print(LarousseParser('as').feed())
-    print(type(LarousseParser('tattered').feed()))
+    print(type(LarousseParser('as').feed()))
