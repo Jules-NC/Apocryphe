@@ -3,6 +3,7 @@ database
 
 It's jsut a way to formalise data in larousse.fr pages
 """
+from collections import namedtuple
 
 
 class LarousseSynset:
@@ -21,48 +22,39 @@ class LarousseSynset:
         new_meaning.number = new_number
         self.meanings.append(new_meaning)
 
-    def set_traduction(self, new_traduction, new_metadatas):
+    def set_traduction(self, new_traduction, new_metadatas):  # new_metadata is a tuple, with 3 arguments
         try:
-            self.last_meaning().traduction = Traduction(new_traduction, Metadata(new_metadatas))
+            self.last_meaning().traduction = Traduction(new_traduction, Metadatas(*new_metadatas))
         except AttributeError:  # If last meaning doesn't exist
             raise AttributeError  # TODO: delete this error test line
             # return    TODO: remove commentary after removed precedent line
 
-    def add_example(self, new_example, new_metadatas):
+    def add_example(self, new_example, new_metadatas):  # new_metadatas is a tuple, with 3 arguments
         try:
-            self.last_meaning().examples.append(Example(new_example, Metadata(new_metadatas)))
+            self.last_meaning().examples.append(Example(new_example, Metadatas(*new_metadatas)))
         except AttributeError:  # If last meaning doesn't exist
             raise AttributeError  # TODO: delete this error test line
             # return    TODO: remove commentary after removed precedent line
 
     def traduction(self):
-        return  [meaning.traduction for meaning in self.meanings if meaning.traduction is not None]
+        return [meaning.traduction.raw for meaning in self.meanings if meaning.traduction is not None]
 
 
-
-
-class Meaning:
+class Meaning:  # Will be modified => not a tuple
     def __init__(self):
         self.number = None
         self.traduction = None
         self.examples = []
 
 
-class Traduction:
-    def __init__(self, new_traduction, new_metadata):
-        self.traduction = new_traduction
-        self.metadatas = new_metadata
-
-
-class Example:
+class Example:  # Will be modified => not a tuple
     def __init__(self, new_example, new_metadatas):
         self.example = new_example.raw
         self.example_trad = new_example.trad
         self.metadatas = new_metadatas
 
 
-class Metadata:
-    def __init__(self, new_metadatas):
-        self.domain = new_metadatas.domain
-        self.metalang = new_metadatas.metalang
-        self.category = new_metadatas.category
+Traduction = namedtuple('Traduction', ['raw', 'metadatas'])    # Will not be changed => tuple
+
+
+Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will not be changed => tuple
