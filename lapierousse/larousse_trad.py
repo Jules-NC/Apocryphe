@@ -16,9 +16,6 @@ class LarousseParser:
         self.metalang = None  # (example)
         self.category_indicator = None  # [example]
 
-        #for l in self.lines:   # TODO: enlever ca sert plus à rien
-            #print(l)
-
     def add_urgent_meaning(self):
         self.l_synsets.last_synset().add_number('1.')
 
@@ -69,9 +66,9 @@ class LarousseParser:
                 if len(self.l_synsets.last_synset().meanings) is 0:
                     self.add_urgent_meaning()
                 example_trad = data(self.lines, line_number)
-                trad = (self.example_raw, example_trad)
+                traduct = (self.example_raw, example_trad)
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)
-                self.l_synsets.last_synset().add_traduction(trad, metadatas)
+                self.l_synsets.last_synset().add_example(traduct, metadatas)
                 self.example_raw = None
                 self.reset_metadatas()
 
@@ -83,7 +80,7 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/as')
+    raw_data = urllib.request.urlopen('http://www.larousse.fr/dictionnaires/anglais-francais/rear')
     raw_data = raw_data.read().decode('utf8')
     raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 

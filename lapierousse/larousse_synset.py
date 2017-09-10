@@ -63,13 +63,13 @@ class Meaning:  # Will be modified => not a tuple
 
     def __str__(self):
         num = '  =>(' + self.number + ')'
-        trad = ''
+        traduct = ''
         for traduction in self.traductions:
-            trad += '    |' + str(traduction) + '\n' # traduction can be None
-        ex = ''
+            traduct += '    |' + str(traduction) + '\n'  # traduction can be None
+        examp = ''
         for example in self.examples:
-            ex +=  '    |' + str(example) + '\n'
-        return num + ':\n' + trad + ex + '\n'
+            examp += '    {' + str(example) + '\n'
+        return num + ':\n' + traduct + examp + '\n'
 
 
 Example = namedtuple('Example', ['raw', 'trad', 'metadatas'])
