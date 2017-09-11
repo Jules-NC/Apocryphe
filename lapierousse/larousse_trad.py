@@ -2,7 +2,7 @@
 from bs4 import BeautifulSoup   # To get a beautifil string to the end. I don't use this module for something else.
 import urllib.request   # To get content from internet and use him with beautifulsoup4
 from larousse_synset import *
-import time
+import time  # for connexions exceptions
 
 
 URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
@@ -10,26 +10,22 @@ URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
 
 class LarousseParser:
     def __init__(self, word):
-        error = False   # UGGGGGLLLY but work ?
-        try:  # I WANT A DO/WHILE BUT..... WHY PYTHON ? WHYYYYYYYYYYYYYY !  TODO: optimisable => optimiser
-            raw_data = urllib.request.urlopen(URL + word)
-        except Exception:
-            error = True
+        raw_data = None
+        error = True   # Just to simulate a DO/While
         while error:
             try:
                 raw_data = urllib.request.urlopen(URL + word)
-                time.sleep(3)
+                time.sleep(2)   # If not i think you will have a INFINITE EXCEPTION !
                 error = False
             except Exception:
+                print('Retry')
                 pass
-
         raw_data = raw_data.read().decode('utf8')
         raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 
-
         self.in_trad = False
 
-        self.lines = [line.strip() for line in raw_data.split('\n')][1700:]
+        self.lines = [line.strip() for line in raw_data.split('\n')][1700:]  # 1700 because the content begin after 1700
         self.l_synsets = LSynsets()
 
         self.in_td = False
@@ -130,4 +126,6 @@ def data(your_list, line_number, offset=1):
 
 if __name__ == '__main__':
     for a in range(10):
-        b = LarousseParser('man').feed()
+        start_time = time.time()
+        b = LarousseParser('or').feed()
+        print("%s seconds ---" % (time.time() - start_time))

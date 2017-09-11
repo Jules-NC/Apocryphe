@@ -3,6 +3,7 @@ database
 
 It's jsut a way to formalise data in larousse.fr pages
 """
+
 from collections import namedtuple
 
 
