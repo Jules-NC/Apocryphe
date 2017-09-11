@@ -26,28 +26,31 @@ def construct_list_of_words_to_translate(file='words_to_translate'):
     return
 
 
-def construct_synset_dictionary():
+def construct_synset_dictionary(lower_bound, broad=999):
+    upper_bound = lower_bound + broad
     synsets_dict = dict()
     with open('../ressources/databases/words_to_translate.txt', 'r') as f:
         for line_number, word in enumerate(f):
+            if line_number < lower_bound:
+                continue
             word = word[:-1]
-            print(line_number, 999, sep='/')
-            if line_number >= 1000:
+            ETA = str((broad - (line_number - lower_bound))*3/60) + ' minutes'
+            print(line_number - lower_bound, '/', broad -1, ' |ETA: ', ETA, sep='')
+            if line_number >= lower_bound + broad - 1:
                 break
             synsets_dict[word] = LarousseParser(word).feed()
-
-    with open('../ressources/pickles/database_test.pkl', 'wb') as f:
+    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad - 1) +'.pkl'
+    with open(filename, 'wb') as f:
         pickle.dump(synsets_dict, f)
-
     return synsets_dict
 
 
 # construct_list_of_words_to_translate()
 start_time = time.time()
-res = construct_synset_dictionary()
+res = construct_synset_dictionary(0, 10)
 
-for k in res:
-    if res[k] is not None:
-        print(k)
-
-print("IN: %s seconds ---" % (time.time() - start_time))
+print('\n')
+print('|==================================================|\n')
+print("EXECUTION DONE !")
+print("File saved !")
+print("TOTAL TIME: %s seconds" % (time.time() - start_time))
