@@ -14,6 +14,8 @@ class LarousseParser:
         raw_data = raw_data.read().decode('utf8')
         raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 
+        self.in_trad = False
+
         self.lines = [line.strip() for line in raw_data.split('\n')]
         self.l_synsets = LSynsets()
 
@@ -33,6 +35,8 @@ class LarousseParser:
 
     def feed(self):
         for line_number, line in enumerate(self.lines):
+            if 'article_bilingue' in line:
+                self.in_trad = True
             if '<td' in line:  # For categoty
                 self.in_td = True
             elif '/td' in line:  # Idem
@@ -43,11 +47,7 @@ class LarousseParser:
                 name = data(self.lines, line_number)
                 self.l_synsets.add_synset(LSynset(name))
                 try:
-                    print(len(self.l_synsets.synsets[-2].meanings))
                     if len(self.l_synsets.synsets[-2].meanings) is 0:
-                        print('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
-                        print(self.l_synsets.synsets[-2])
-                        print('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
                         del self.l_synsets.synsets[-2]
                 except Exception:
                     pass
@@ -71,13 +71,21 @@ class LarousseParser:
             elif 'Metalangue' in line:
                 self.metalang = data(self.lines, line_number)
 
-            elif 'lienarticle2' in line:
+            elif 'Traduction' in line and 'Traduction2' not in line and self.in_trad:
                 if len(self.l_synsets.last_synset().meanings) is 0:
                     self.add_urgent_meaning()
-                traduction = data(self.lines, line_number)
+                traduction = ''
+                i = line_number + 1
+                while '/span' not in self.lines[i]:
+                    if '<' not in self.lines[i]:
+                        traduction += self.lines[i]
+                    i += 1
+                print(traduction)
+
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
                 self.l_synsets.last_synset().add_traduction(traduction, metadatas)
                 self._reset_metadatas()
+
             elif 'Locution2' in line:
                 self.example_raw = data(self.lines, line_number)
 
@@ -100,5 +108,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('as').feed())
-    print(type(LarousseParser('as').feed()))
+    print(LarousseParser('yes').feed())
