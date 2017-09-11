@@ -19,6 +19,13 @@ class LSynsets:
         except Exception:
             return None
 
+    def delete_useless_synset(self):
+        for i, synset in enumerate(self.synsets):
+            if len(synset.meanings) is 0:
+                print(self.synsets[i].name)
+                del self.synsets[i]
+            self.synsets[i].delete_useless_meanings()
+
     def __str__(self):
         res = ''
         for synset in self.synsets:
@@ -48,6 +55,11 @@ class LSynset:
 
     def add_example(self, new_example, new_metadatas):  # new_metadatas is a tuple, with 3 arguments
         self.last_meaning().examples.append(Example(new_example[0], new_example[1],  Metadatas(*new_metadatas)))
+
+    def delete_useless_meanings(self):
+        for i, meaning in enumerate(self.meanings):
+            if len(meaning.traductions) is 0 and len(meaning.examples) is 0:
+                del self.meanings[i]
 
     def __str__(self):
         means = ''

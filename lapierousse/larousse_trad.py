@@ -46,12 +46,6 @@ class LarousseParser:
             if 'Adresse' in line:
                 name = data(self.lines, line_number)
                 self.l_synsets.add_synset(LSynset(name))
-                try:
-                    if len(self.l_synsets.synsets[-2].meanings) is 0:
-                        del self.l_synsets.synsets[-2]
-                except Exception:
-                    pass
-
 
             # number => new Meaning(number)
             elif 'numero' in line:
@@ -80,7 +74,6 @@ class LarousseParser:
                     if '<' not in self.lines[i]:
                         traduction += self.lines[i]
                     i += 1
-                print(traduction)
 
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
                 self.l_synsets.last_synset().add_traduction(traduction, metadatas)
@@ -100,6 +93,7 @@ class LarousseParser:
                 self.example_raw = None
                 self._reset_metadatas()
 
+        self.l_synsets.delete_useless_synset()
         return self.l_synsets
 
 
@@ -108,4 +102,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('yes').feed())
+    print(LarousseParser('as').feed())
