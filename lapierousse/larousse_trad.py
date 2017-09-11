@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup   # To get a beautifil string to the end. I don't use this module for something else.
 import urllib.request   # To get content from internet and use him with beautifulsoup4
 from larousse_synset import *
+import time
 
 
 URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
@@ -9,10 +10,22 @@ URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
 
 class LarousseParser:
     def __init__(self, word):
-        # TODO: THE ERROR IS HERE ! RESOLVE THE ERROR ! RESOLVE !!! PLEASE !!! YOU MUST
-        raw_data = urllib.request.urlopen(URL + word)
+        error = False   # UGGGGGLLLY but work ?
+        try:  # I WANT A DO/WHILE BUT..... WHY PYTHON ? WHYYYYYYYYYYYYYY !  TODO: optimisable => optimiser
+            raw_data = urllib.request.urlopen(URL + word)
+        except Exception:
+            error = True
+        while error:
+            try:
+                raw_data = urllib.request.urlopen(URL + word)
+                time.sleep(3)
+                error = False
+            except Exception:
+                pass
+
         raw_data = raw_data.read().decode('utf8')
         raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
+
 
         self.in_trad = False
 
@@ -116,4 +129,5 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('man').feed())
+    for a in range(10):
+        b = LarousseParser('man').feed()
