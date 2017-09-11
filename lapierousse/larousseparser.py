@@ -125,7 +125,7 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    for a in range(10):
-        start_time = time.time()
-        b = LarousseParser('or').feed()
-        print("%s seconds ---" % (time.time() - start_time))
+    start_time = time.time()
+    b = LarousseParser('seizing').feed()
+    print(b)
+    print("%s seconds ---" % (time.time() - start_time))

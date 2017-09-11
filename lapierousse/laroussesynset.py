@@ -23,7 +23,10 @@ class LSynsets:
         for i, synset in enumerate(self.synsets):
             if len(synset.meanings) is 0:
                 del self.synsets[i]
-            self.synsets[i].delete_useless_meanings()
+            try:
+                self.synsets[i].delete_useless_meanings()
+            except IndexError:
+                pass
 
     def __str__(self):
         res = ''
