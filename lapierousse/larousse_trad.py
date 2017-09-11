@@ -76,19 +76,13 @@ class LarousseParser:
                 traduction = ''
                 i = line_number + 1
                 while '/span' not in self.lines[i]:
-                    if '<span' in self .lines[i]:
+                    if '<span' in self .lines[i]:   # M/F bug and useless data
                         i += 2
                         traduction += ' '
-                    if '<small' in self.lines[i]:
+                    if '<small' in self.lines[i]:   # OR bug (word1orword2 => word1 OR word2)
                         traduction += ' ' + self.lines[i+1].upper() + ' '
-                        i+= 2
+                        i += 2
                     if '<' not in self.lines[i]:
-                        # if len(self.lines[i]) <= 2:  # Handle Féminin/Masculin bug    # TODO: vérifier M/F bugs 1 & 2
-                        #     if self.lines[i][0] != 'm' or self.lines[i][0] != 'f':
-                        #         traduction += self.lines[i][1:]
-                        #         i += 1
-                        #         continue
-                        #print(self.lines[i])
                         traduction += self.lines[i]
                     i += 1
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
@@ -120,4 +114,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('cradle').feed())
+    print(LarousseParser('baby').feed())

@@ -17,6 +17,8 @@ class LSynsets:
         return self.synsets[-1]
 
     def delete_useless_synset(self):
+        if len(self.synsets) is 1:
+            del self.synsets[0]
         for i, synset in enumerate(self.synsets):
             if len(synset.meanings) is 0:
                 del self.synsets[i]
@@ -58,7 +60,7 @@ class LSynset:
         means = ''
         for meaning in self.meanings:
             means += str(meaning)
-        return str(self.name.upper()) + '\n' + self.gramatical_category + '\n' + str(means)
+        return str(self.name.upper()) + '\n' + str(self.gramatical_category) + '\n' + str(means)
 
 
 class Meaning:  # Will be modified => not a tuple
