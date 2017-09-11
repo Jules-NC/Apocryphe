@@ -6,4 +6,5 @@ class Constructor:
     def __init__(self, filename, lower_bound, upper_bound):   # Lines [a:b] will be read
         self.all_LSynsets = {}
 
-with open('../')
+with open('../'):
+    pass

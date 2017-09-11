@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup   # To get a beautifil string to the end. I don't use this module for something else.
 import urllib.request   # To get content from internet and use him with beautifulsoup4
-from larousse_synset import *
+from laroussesynset import *
 import time  # for connexions exceptions
 
 
