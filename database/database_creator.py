@@ -27,19 +27,21 @@ def construct_list_of_words_to_translate(file='words_to_translate'):
 
 
 def construct_synset_dictionary(lower_bound, broad=999):
-    upper_bound = lower_bound + broad
+    if lower_bound + broad > 58739:
+        broad = 58739 - lower_bound
     synsets_dict = dict()
     with open('../ressources/databases/words_to_translate.txt', 'r') as f:
         for line_number, word in enumerate(f):
             if line_number < lower_bound:
                 continue
             word = word[:-1]
-            ETA = str((broad - (line_number - lower_bound))*3/60) + ' minutes'
-            print(line_number - lower_bound, '/', broad -1, ' |ETA: ', ETA, sep='')
+            print(word)
+            eta = str((broad - (line_number - lower_bound))*3/60) + ' minutes'
+            print(line_number - lower_bound, '/', broad -1, ' |ETA: ', eta, sep='')
             if line_number >= lower_bound + broad - 1:
                 break
             synsets_dict[word] = LarousseParser(word).feed()
-    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad - 1) +'.pkl'
+    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad - 1) + '.pkl'
     with open(filename, 'wb') as f:
         pickle.dump(synsets_dict, f)
     return synsets_dict
@@ -47,7 +49,7 @@ def construct_synset_dictionary(lower_bound, broad=999):
 
 # construct_list_of_words_to_translate()
 start_time = time.time()
-res = construct_synset_dictionary(0, 10)
+res = construct_synset_dictionary(58736, 10)
 
 print('\n')
 print('|==================================================|\n')
