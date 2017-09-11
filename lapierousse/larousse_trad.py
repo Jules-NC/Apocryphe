@@ -9,7 +9,7 @@ URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
 
 class LarousseParser:
     def __init__(self, word):
-
+        # TODO: THE ERROR IS HERE ! RESOLVE THE ERROR ! RESOLVE !!! PLEASE !!! YOU MUST
         raw_data = urllib.request.urlopen(URL + word)
         raw_data = raw_data.read().decode('utf8')
         raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
@@ -82,6 +82,8 @@ class LarousseParser:
                     if '<small' in self.lines[i]:   # OR bug (word1orword2 => word1 OR word2)
                         traduction += ' ' + self.lines[i+1].upper() + ' '
                         i += 2
+                    if 'lienconj2' in self.lines[i]:
+                        i += 2
                     if '<' not in self.lines[i]:
                         traduction += self.lines[i]
                     i += 1
@@ -114,4 +116,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('baby').feed())
+    print(LarousseParser('man').feed())
