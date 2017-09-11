@@ -13,11 +13,8 @@ class LSynsets:
     def add_synset(self, synset):
         self.synsets.append(synset)
 
-    def last_synset(self):
-        try:
-            return self.synsets[-1]
-        except Exception:
-            return None
+    def last_synset(self):  # TODO: vérifier excéption
+        return self.synsets[-1]
 
     def delete_useless_synset(self):
         for i, synset in enumerate(self.synsets):
@@ -39,12 +36,9 @@ class LSynset:
         self.gramatical_category = None
         self.meanings = []
 
-    def last_meaning(self):  # TODO: trouver utilité de ce truc
-        try:
-            if len(self.meanings) is not 0:
-                return self.meanings[-1]
-        except Exception:
-            return None
+    def last_meaning(self):  # TODO: peut être excéption: vérifier
+        if len(self.meanings) is not 0:
+            return self.meanings[-1]
 
     def add_number(self, new_number):
         new_meaning = Meaning(new_number)

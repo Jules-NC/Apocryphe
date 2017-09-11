@@ -35,7 +35,7 @@ class LarousseParser:
 
     def feed(self):
         for line_number, line in enumerate(self.lines):
-            if 'article_bilingue' in line:
+            if 'article_bilingue' in line:  # Before this, we don't want 'Traduction' class
                 self.in_trad = True
             if '<td' in line:  # For categoty
                 self.in_td = True
@@ -56,7 +56,7 @@ class LarousseParser:
                 gram_category = data(self.lines, line_number, 1)  # TODO: 1., 2., 5. rectification to int
                 self.l_synsets.last_synset().gramatical_category = gram_category
 
-            elif 'IndicateurDomaine' in line:  # TODO: vérifier si ces 2 conditions doivent être dans cet ordre
+            elif 'IndicateurDomaine' in line:
                 self.domain_indicator = data(self.lines, line_number)
 
             elif 'Indicateur' in line:
@@ -65,6 +65,7 @@ class LarousseParser:
             elif 'Metalangue' in line:
                 self.metalang = data(self.lines, line_number)
 
+            # Cover all 'Traduction' possibilities
             elif 'Traduction' in line and 'Traduction2' not in line and self.in_trad:
                 if len(self.l_synsets.last_synset().meanings) is 0:
                     self.add_urgent_meaning()
@@ -74,7 +75,6 @@ class LarousseParser:
                     if '<' not in self.lines[i]:
                         traduction += self.lines[i]
                     i += 1
-
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
                 self.l_synsets.last_synset().add_traduction(traduction, metadatas)
                 self._reset_metadatas()
@@ -102,4 +102,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('as').feed())
+    print(LarousseParser('tattered').feed())
