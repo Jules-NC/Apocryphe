@@ -16,7 +16,7 @@ class LarousseParser:
 
         self.in_trad = False
 
-        self.lines = [line.strip() for line in raw_data.split('\n')]
+        self.lines = [line.strip() for line in raw_data.split('\n')][1700:]
         self.l_synsets = LSynsets()
 
         self.in_td = False
@@ -37,6 +37,10 @@ class LarousseParser:
         for line_number, line in enumerate(self.lines):
             if 'article_bilingue' in line:  # Before this, we don't want 'Traduction' class
                 self.in_trad = True
+
+            if not self.in_trad:  # ==> Usefull data => we continue
+                continue
+
             if '<td' in line:  # For categoty
                 self.in_td = True
             elif '/td' in line:  # Idem
@@ -72,7 +76,19 @@ class LarousseParser:
                 traduction = ''
                 i = line_number + 1
                 while '/span' not in self.lines[i]:
+                    if '<span' in self .lines[i]:
+                        i += 2
+                        traduction += ' '
+                    if '<small' in self.lines[i]:
+                        traduction += ' ' + self.lines[i+1].upper() + ' '
+                        i+= 2
                     if '<' not in self.lines[i]:
+                        # if len(self.lines[i]) <= 2:  # Handle Féminin/Masculin bug    # TODO: vérifier M/F bugs 1 & 2
+                        #     if self.lines[i][0] != 'm' or self.lines[i][0] != 'f':
+                        #         traduction += self.lines[i][1:]
+                        #         i += 1
+                        #         continue
+                        #print(self.lines[i])
                         traduction += self.lines[i]
                     i += 1
                 metadatas = (self.domain_indicator, self.metalang, self.category_indicator)  # TODO: a method for this
@@ -94,6 +110,8 @@ class LarousseParser:
                 self._reset_metadatas()
 
         self.l_synsets.delete_useless_synset()
+        if len(self.l_synsets.synsets) is 0:
+            self.l_synsets = None
         return self.l_synsets
 
 
@@ -102,4 +120,4 @@ def data(your_list, line_number, offset=1):
 
 
 if __name__ == '__main__':
-    print(LarousseParser('tattered').feed())
+    print(LarousseParser('cradle').feed())

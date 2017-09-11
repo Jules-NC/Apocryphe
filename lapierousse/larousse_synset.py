@@ -19,7 +19,6 @@ class LSynsets:
     def delete_useless_synset(self):
         for i, synset in enumerate(self.synsets):
             if len(synset.meanings) is 0:
-                print(self.synsets[i].name)
                 del self.synsets[i]
             self.synsets[i].delete_useless_meanings()
 
