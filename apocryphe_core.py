@@ -6,17 +6,15 @@ Created on Sat Aug 19 20:46:41 2017
 """
 # IMPORTATIONS
 # TODO: emplacement des fichiers
-from utils.word_analysis import levenshtein_list    # Gère la séléction et la validité du test et d'autres trucs
-from utils.math_tools import maxf   # permet de set la valeur de pds
-from utils.misc import *     # Limite la valeur de x entre a et b
+from tools.misc import *     # Limite la valeur de x entre a et b
 import random
 import csv
 import sys
 
 
 # VARIABLES GLOBALES
-FICHIER = "./ressources/dict.txt"
-IMPORTATION = "./ressources/mots.txt"
+FICHIER = "./ressources/dict.txt"   # Set your dataset here
+IMPORTATION = "./ressources/mots.txt"  # Set your dataset here
 AFFICHAGE = False   # You can visualize bad and gud number of each lethe in LMAO with this
 
 
@@ -82,7 +80,8 @@ class Apocryphe:
         self.lethe_list[i] = self.lethe_list[j]
         self.lethe_list[j] = t
 
-    def to_pds(self): return [int(e.pds) for e in self.lethe_list]
+    def to_pds(self):
+        return [int(e.pds) for e in self.lethe_list]
 
     def add(self, a, b):    # A REVOIR
         if a is None or b is None:

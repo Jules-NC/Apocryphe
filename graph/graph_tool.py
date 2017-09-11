@@ -20,12 +20,14 @@ def is_cyclic(g):   # O(E + V)
         return False
     return any(visit(v) for v in g)
 
-def construct_filename(folder='Misc', filename='dummy', extension='txt'):
+
+def construct_filename(folder='ressources', filename='dummy', extension='txt'):
     now = datetime.datetime.now()
-    folder = '..ou/ressources/' + folder + '/'
+    folder = '../ressources/' + folder + '/'
     date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
     filename = folder + filename + date + '.' + extension
     return filename
+
 
 class Graph:  # O(1)
     def __init__(self, vertices, edges):
@@ -81,7 +83,7 @@ class Graph:  # O(1)
         self.vertices[vertice] = res
         return res
 
-    def invert(self): #TODO comprendre ce truc
+    def invert(self):  # TODO comprendre ce truc
         self.reset_compute()
         new_edges = {source: [] for source in self.vertices.keys()}
         for source in self.vertices.keys():
@@ -122,7 +124,7 @@ class Graph:  # O(1)
         print('======[END]======')
 
     def to_csv(self, filename='vizualization'):   # O(2V)
-        file = construct_filename('Databases', filename, 'csv')
+        file = construct_filename('databases', filename, 'csv')
 
         edges = ((str(source), str(target), str(self.vertices[source]))     # Source/Target/Computed_value
                  for source in self.vertices for target in self.edges[source])
@@ -133,30 +135,30 @@ class Graph:  # O(1)
                 f.write(edge[0] + ',' + edge[1] + ',' + edge[2] + '\n')
 
     def save(self):    # O(sef)
-        file = construct_filename('Pickles','graph','pkl')
+        file = construct_filename('pickles','graph','pkl')
         with open(file, 'wb') as f:
             pickle.dump(self, f)
 
 if __name__ == '__main__':
 
-    from nltk.corpus import wordnet as wn
+    # from nltk.corpus import wordnet as wn
     # edges composition: {[node (int)]:[arcs (str)]}
     # vertices = {synset.name(): -1 for synset in wn.all_synsets()}
     # edges = {synset.name(): [target.name() for target in synset.hyponyms()] for synset in wn.all_synsets()}
     # edges['restrain.v.01'] = ['confine.v.03', 'control.v.02', 'hold.v.36']
 
-    vertices = {'A':-1,
-                'B':-1,
-                'C':-1,
-                'D':-1,
-                'E':-1,
-                'F':-1}
-    edges = {'A':['B','C'],
-             'B':[],
-             'C':[],
-             'D':['C', 'E'],
-             'E':[],
-             'F':['B', 'A', 'D']}
+    vertices = {'A': -1,
+                'B': -1,
+                'C': -1,
+                'D': -1,
+                'E': -1,
+                'F': -1}
+    edges = {'A': ['B','C'],
+             'B': [],
+             'C': [],
+             'D': ['C', 'E'],
+             'E': [],
+             'F': ['B', 'A', 'D']}
 
     print('CALCULATING...')
 

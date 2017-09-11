@@ -61,7 +61,7 @@ def main():
 def command(texte, apo, lethe):    # CA J'AIME ! OUI J'AIME CA ! OH OUI ! ANNNNNHH !
     liste = texte.split(' ')
     clef = liste[0][1:]
-
+    reste = None
     try:
         reste = liste[1]
         base = reste.split(',')[0]
