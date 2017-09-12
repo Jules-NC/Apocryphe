@@ -35,9 +35,9 @@ def construct_synset_dictionary(lower_bound, broad=1000):
             if line_number < lower_bound:
                 continue
             word = word[:-1]
-            #print(word)
-            eta = str((broad - (line_number - lower_bound))*1.2/60) + ' minutes'
-            print('BEGIN: ', lower_bound, '| ', line_number - lower_bound, '/', broad -1, ' |ETA: ', eta, sep='')
+            # print(word)
+            eta = str((broad - (line_number - lower_bound))*0.7/60) + ' minutes'
+            print('BEGIN: ', lower_bound, '| ', line_number - lower_bound, '/', broad - 1, ' |ETA: ', eta, sep='')
             if line_number >= lower_bound + broad - 1:
                 break
             synsets_dict[word] = LarousseParser(word).feed()
@@ -47,7 +47,7 @@ def construct_synset_dictionary(lower_bound, broad=1000):
     return synsets_dict
 
 
-#construct_list_of_words_to_translate()
+# construct_list_of_words_to_translate()
 start_time = time.time()
 res = construct_synset_dictionary(0, 1000)
 
