@@ -4,7 +4,7 @@ don't say this !
 """
 from larousseparser import LarousseParser
 from nltk.corpus import wordnet as wn
-from threading import Thread
+import concurrent.futures
 import pickle
 import time
 
@@ -26,40 +26,34 @@ def construct_list_of_words_to_translate(file='words_to_translate.txt'):
     print("DONE !")
     return
 
-class ConstructDict(Thread):
-    def __init__(self, lower_b, broad_=1000):
-        Thread.__init__(self)
-        self.lower_bound = lower_b
-        self.broad = broad_
-        self.construct_synset_dictionary()
 
-    def construct_synset_dictionary(self):
-        if self.lower_bound + self.broad > 55574:
-            broad = 55574 - self.lower_bound
-        synsets_dict = dict()
-        with open('../ressources/databases/words_to_translate.txt', 'r') as f:
-            for line_number, word in enumerate(f):
-                if line_number < self.lower_bound:
-                    continue
-                word = word[:-1]
-                eta = str((self.broad - (line_number - self.lower_bound))*0.7/60) + ' minutes'
-                print('BEGIN: ', self.lower_bound, '| ', line_number - self.lower_bound, '/', self.broad - 1, ' |ETA: ',
-                      eta,
-                      sep='')
-                if line_number >= self.lower_bound + self.broad - 1:
-                    break
-                synsets_dict[word] = LarousseParser(word).feed()
-        filename = '../ressources/pickles/database_' + str(self.lower_bound) + '-' + str(self.lower_bound + self.broad -
-                                                                                         1) + '.pkl'
-        with open(filename, 'wb') as f:
-            pickle.dump(synsets_dict, f)
-        return synsets_dict
+def construct_synset_dictionary(lower_bound, broad=1000):
+    if lower_bound + broad > 55574:
+        broad = 55574 - lower_bound
+    synsets_dict = dict()
+    with open('../ressources/databases/words_to_translate.txt', 'r') as f:
+        for line_number, word in enumerate(f):
+            if line_number < lower_bound:
+                continue
+            word = word[:-1]
+            print(word)
+            eta = str((broad - (line_number - lower_bound))*0.7/60) + ' minutes'
+            print('BEGIN: ', lower_bound, '| ', line_number - lower_bound, '/', broad - 1, ' |ETA: ', eta, sep='')
+            if line_number >= lower_bound + broad - 1:
+                break
+            synsets_dict[word] = LarousseParser(word).feed()
+    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad -1) + '.pkl'
+    with open(filename, 'wb') as f:
+        pickle.dump(synsets_dict, f)
+    return synsets_dict
 
 
 # construct_list_of_words_to_translate()
 start_time = time.time()
 
-res = [ConstructDict(lower_bound).start() for lower_bound in range(0, 10000, 1000)]
+debuts = [a for a in range(0, 50000, 1000)]
+with concurrent.futures.ThreadPoolExecutor(2) as executor:
+    executor.map(construct_synset_dictionary, debuts)
 
 print('\n')
 print('|==================================================|\n')
