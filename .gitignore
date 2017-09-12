@@ -2,7 +2,7 @@ Private/*
 .idea/*
 *_test.py
 *.pkl
-*.csv
 *.txt
+*.csv
 *.png
 __pycache__

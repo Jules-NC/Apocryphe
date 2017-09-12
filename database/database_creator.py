@@ -26,16 +26,15 @@ def construct_list_of_words_to_translate(file='words_to_translate'):
     return
 
 
-def construct_synset_dictionary(lower_bound, broad=999):
+def construct_synset_dictionary(lower_bound, broad=1000):
     if lower_bound + broad > 58739:
         broad = 58739 - lower_bound
     synsets_dict = dict()
-    with open('../ressources/databases/words_to_translate.txt', 'r') as f:
+    with open('../ressources/databases/words_to_translate', 'r') as f:
         for line_number, word in enumerate(f):
             if line_number < lower_bound:
                 continue
             word = word[:-1]
-            print(word)
             eta = str((broad - (line_number - lower_bound))*3/60) + ' minutes'
             print(line_number - lower_bound, '/', broad -1, ' |ETA: ', eta, sep='')
             if line_number >= lower_bound + broad - 1:
@@ -49,7 +48,7 @@ def construct_synset_dictionary(lower_bound, broad=999):
 
 # construct_list_of_words_to_translate()
 start_time = time.time()
-res = construct_synset_dictionary(58736, 10)
+res = construct_synset_dictionary(58736, 1000)
 
 print('\n')
 print('|==================================================|\n')
