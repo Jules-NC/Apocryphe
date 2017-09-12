@@ -15,11 +15,12 @@ class LarousseParser:
         while error:
             try:
                 raw_data = urllib.request.urlopen(URL + word)
-                time.sleep(2)   # If not i think you will have a INFINITE EXCEPTION !
                 error = False
             except Exception:
                 print('Retry')
+                time.sleep(2)
                 pass
+
         raw_data = raw_data.read().decode('utf8')
         raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
 
