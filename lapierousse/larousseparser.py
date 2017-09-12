@@ -18,7 +18,7 @@ class LarousseParser:
                 error = False
             except Exception:
                 print('Retry')
-                time.sleep(2)
+                time.sleep(15)
                 pass
 
         raw_data = raw_data.read().decode('utf8')
