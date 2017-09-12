@@ -51,8 +51,8 @@ def construct_synset_dictionary(lower_bound, broad=1000):
 # construct_list_of_words_to_translate()
 start_time = time.time()
 
-debuts = [a for a in range(0, 50000, 1000)]
-with concurrent.futures.ThreadPoolExecutor(2) as executor:
+debuts = [a for a in range(, 10000, 1000)]
+with concurrent.futures.ThreadPoolExecutor(4) as executor:
     executor.map(construct_synset_dictionary, debuts)
 
 print('\n')
