@@ -8,34 +8,35 @@ import pickle
 import time
 
 
-def construct_list_of_words_to_translate(file='words_to_translate'):
+def construct_list_of_words_to_translate(file='words_to_translate.txt'):
     print("COMPUTING PHASE...")
 
     words_to_translate = set()
     for synset in wn.all_synsets():
         name = synset.name()
-        if '_' not in name:
+        if '_' not in name and '-' not in name and '.' not in name[:-5]:
             words_to_translate.add(name[:-5])
 
     print("WRITING PHASE...")
     with open('../ressources/databases/' + file, 'w') as f:
         for word in words_to_translate:
-            f.write(word)
+            f.write(word + '\n')
 
     print("DONE !")
     return
 
 
 def construct_synset_dictionary(lower_bound, broad=1000):
-    if lower_bound + broad > 58739:
-        broad = 58739 - lower_bound
+    if lower_bound + broad > 55574:
+        broad = 55574 - lower_bound
     synsets_dict = dict()
     with open('../ressources/databases/words_to_translate.txt', 'r') as f:
         for line_number, word in enumerate(f):
             if line_number < lower_bound:
                 continue
             word = word[:-1]
-            eta = str((broad - (line_number - lower_bound))*3/60) + ' minutes'
+            #print(word)
+            eta = str((broad - (line_number - lower_bound))*1.2/60) + ' minutes'
             print('BEGIN: ', lower_bound, '| ', line_number - lower_bound, '/', broad -1, ' |ETA: ', eta, sep='')
             if line_number >= lower_bound + broad - 1:
                 break
@@ -46,9 +47,9 @@ def construct_synset_dictionary(lower_bound, broad=1000):
     return synsets_dict
 
 
-# construct_list_of_words_to_translate()
+#construct_list_of_words_to_translate()
 start_time = time.time()
-res = construct_synset_dictionary(9000, 1000)
+res = construct_synset_dictionary(0, 1000)
 
 print('\n')
 print('|==================================================|\n')

@@ -11,23 +11,28 @@ URL = 'http://www.larousse.fr/dictionnaires/anglais-francais/'
 class LarousseParser:
     def __init__(self, word):
         raw_data = None
-        error = True   # Just to simulate a DO/While
-        while error:
+        self.error = True   # Just to simulate a DO/While
+        while self.error:
             try:
                 raw_data = urllib.request.urlopen(URL + word)
-                error = False
+                self.error = False
+            except urllib.error.HTTPError:
+                print('404_ERROR !')
+                break
             except Exception:
-                print('Retry')
-                time.sleep(15)
-                pass
-
-        raw_data = raw_data.read().decode('utf8')
-        raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
+                print("AUTRE_EXCEPTION !!!")
+                time.sleep(3)
+                #pass
+        if not self.error:
+            raw_data = raw_data.read().decode('utf8')
+            raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
+            self.lines = [line.strip() for line in raw_data.split('\n')][
+                         1700:]  # 1700 because the content begin after 1700
+            self.l_synsets = LSynsets()
 
         self.in_trad = False
 
-        self.lines = [line.strip() for line in raw_data.split('\n')][1700:]  # 1700 because the content begin after 1700
-        self.l_synsets = LSynsets()
+
 
         self.in_td = False
         self.example_raw = None
@@ -44,6 +49,8 @@ class LarousseParser:
         self.l_synsets.last_synset().add_number('1.')
 
     def feed(self):
+        if self.error:  # If 404 ERROR:
+            return None
         for line_number, line in enumerate(self.lines):
             if 'article_bilingue' in line:  # Before this, we don't want 'Traduction' class
                 self.in_trad = True
