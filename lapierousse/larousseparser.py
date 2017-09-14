@@ -33,13 +33,11 @@ class LarousseParser:
                     print("================================C_R_ERROR======================")
                     time.sleep(1)
             raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
-            self.lines = [line.strip() for line in raw_data.split('\n')][
-                         1700:]  # 1700 because the content begin after 1700
+            self.lines = [line.strip() for line in raw_data.split('\n')]  # 1700 because the content begin
+            # after 1700
             self.l_synsets = LSynsets()
 
         self.in_trad = False
-
-
 
         self.in_td = False
         self.example_raw = None
@@ -128,7 +126,7 @@ class LarousseParser:
                 self.l_synsets.last_synset().add_example(traduct, metadatas)
                 self.example_raw = None
                 self._reset_metadatas()
-
+        #print(len(self.l_synsets.synsets))
         self.l_synsets.delete_useless_synset()
         if len(self.l_synsets.synsets) is 0:
             self.l_synsets = None
@@ -141,6 +139,6 @@ def data(your_list, line_number, offset=1):
 
 if __name__ == '__main__':
     start_time = time.time()
-    b = LarousseParser('seizing').feed()
+    b = LarousseParser('tattered').feed()
     print(b)
     print("%s seconds ---" % (time.time() - start_time))

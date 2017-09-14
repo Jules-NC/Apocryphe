@@ -9,6 +9,12 @@ for nom_fichier in noms_fichiers:  # TODO: LIST COMPREHENSION
         quantic_soup.append(pickle.load(f))
 
 jesus = quantic_soup[0]
-jesus = [jesus.update(osti) for osti in quantic_soup[1:]]
+for osti in range(1, len(quantic_soup)):
+    jesus.update(quantic_soup[osti])
+
+c = 0
 for osti in jesus:
-    print(osti)
+    if osti == 'heretic':    # TODO: Vérifier la condition > 1700 lignes. Si c'est pas ca je ss gouaké
+        c += 1
+        print(jesus[osti])
+print("TOT:", c)

@@ -21,8 +21,9 @@ class LSynsets:
             return LSynset('DUMMY')  # TODO: Comprendre le comportement de cet objet
 
     def delete_useless_synset(self):
-        if len(self.synsets) is 1:
-            del self.synsets[0]
+        #if len(self.synsets) is 1:  # TODO: WTF
+            #del self.synsets[0]    # TODO: COmprendre d'ou ca ca enlevait une erreur
+            #pass
         for i, synset in enumerate(self.synsets):
             if len(synset.meanings) is 0:
                 del self.synsets[i]
