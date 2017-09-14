@@ -14,8 +14,11 @@ class LSynsets:
     def add_synset(self, synset):
         self.synsets.append(synset)
 
-    def last_synset(self):  # TODO: vérifier excéption
-        return self.synsets[-1]
+    def last_synset(self):
+        try:
+            return self.synsets[-1]
+        except IndexError:
+            return LSynset('DUMMY')  # TODO: Comprendre le comportement de cet objet
 
     def delete_useless_synset(self):
         if len(self.synsets) is 1:

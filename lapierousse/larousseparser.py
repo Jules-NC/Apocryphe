@@ -24,7 +24,14 @@ class LarousseParser:
                 time.sleep(3)
                 #pass
         if not self.error:
-            raw_data = raw_data.read().decode('utf8')
+            self.error = True
+            while self.error:  # HANDLE CONNEXION RESET ERROR but not just this error but it's ok !
+                try:
+                    raw_data = raw_data.read().decode('utf8')
+                    self.error = False
+                except Exception:
+                    print("================================C_R_ERROR======================")
+                    time.sleep(1)
             raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
             self.lines = [line.strip() for line in raw_data.split('\n')][
                          1700:]  # 1700 because the content begin after 1700
