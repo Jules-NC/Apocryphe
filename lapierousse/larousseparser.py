@@ -139,6 +139,6 @@ def data(your_list, line_number, offset=1):
 
 if __name__ == '__main__':
     start_time = time.time()
-    b = LarousseParser('tattered').feed()
+    b = LarousseParser('as').feed()
     print(b)
     print("%s seconds ---" % (time.time() - start_time))
