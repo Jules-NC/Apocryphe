@@ -47,9 +47,14 @@ def simple_merge(source, target):
         for line in s:
             words_file_1.add(line)
 
-    with open('../ressources/databases/' + target, 'r') as t:
-        for line in t:
-            words_file_2.add(line)
+    try:
+        with open('../ressources/databases/' + target, 'r') as t:
+            for line in t:
+                words_file_2.add(line)
+    except IOError:
+        print('File:', target, 'in ressources/databases was not found.')
+        print('File created')
+
     res = words_file_1.union(words_file_2)
 
     with open('../ressources/databases/c.txt', 'w') as f:    # TODO: temporaire (fichier source plus tard
@@ -57,7 +62,7 @@ def simple_merge(source, target):
             f.write(word)
 
 
-def merge(target, sources):  # Sources is iterator
+def merge_files(target, sources):  # Sources is iterator
     words_sources = set()
     words_target = set()
 
@@ -67,9 +72,15 @@ def merge(target, sources):  # Sources is iterator
             for word in s:
                 words_sources.add(word)
 
-    with open('../ressources/databases/' + target, 'r') as t:
-        for word in t:
-            words_target.add(word)
+    try:
+        with open('../ressources/databases/' + target, 'r') as t:  # Target not cleaned because of recursivity and
+            # all this you see i think. If not how we say in French: 'Le fromage est dans la galette suisse,
+            # mangée apr une souris hémoroidale', and we add: 'Gourgandine'.
+            for word in t:
+                words_target.add(word)
+    except IOError:
+        print('File:', target, 'in ressources/databases was not found.')
+        print('File created')
 
     all_words = words_target.union(words_sources)
 
@@ -79,6 +90,4 @@ def merge(target, sources):  # Sources is iterator
 
 
 if __name__ == '__main__':
-    #clean_file('a.txt')
-    #simple_merge('a.txt', 'b.txt')
-    merge('c.txt', ('a.txt', 'b.txt'))
+    merge_files('caca.txt', ('a.txt', 'b.txt'))
