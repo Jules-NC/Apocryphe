@@ -5,13 +5,32 @@ It's cool. OK ?
 
 PS: EMPTY LINES = CACA
 """
+import unidecode  # For accents
 
 
-def no_duplicates(source):
+def remove_accents(potentially_accented_string_but_not_necessarily):
+    return unidecode.unidecode(potentially_accented_string_but_not_necessarily)  # INCREDOYABLE
+
+
+def normalize(word):
+    word = remove_accents(word)  # No accents
+    if not word.islower():  # No caps
+        word = word.lower()
+    aryans_letters = 'abcdefghijklmnopqrstuvwxyz'  # Superior letters
+    for letter in word:  # No other letters than [a-z]
+        if letter not in aryans_letters:
+            word = word.replace(letter, '')
+
+    return word  # Ouah ! Perfect word
+
+
+def no_duplicates(source):  # TODO: Régler le pb des espaces
     with open('../ressources/databases/' + source, 'r') as f:
         words_set = set()
         for word in f:
-            words_set.add(word)
+            word = normalize(word)
+            words_set.add(word + '\n')
+
     with open('../ressources/databases/' + source, 'w') as f:
         for word in words_set:
             f.write(word)
