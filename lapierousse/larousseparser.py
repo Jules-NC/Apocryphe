@@ -33,7 +33,7 @@ class LarousseParser:
                     print("================================C_R_ERROR======================")
                     time.sleep(1)
             raw_data = str(BeautifulSoup(raw_data, 'html.parser').prettify())
-            self.lines = [line.strip() for line in raw_data.split('\n')]  # 1700 because the content begin
+            self.lines = [line.strip() for line in raw_data.split('\n')][1500:]  # 1700 because the content begin
             # after 1700
             self.l_synsets = LSynsets()
 

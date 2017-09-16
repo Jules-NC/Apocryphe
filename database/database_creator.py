@@ -28,8 +28,6 @@ def construct_list_of_words_to_translate(file='words_to_translate.txt'):
 
 
 def construct_synset_dictionary(lower_bound, broad=1000):
-    if lower_bound + broad > 55754:
-        broad = 55754 - lower_bound
     synsets_dict = dict()
     with open('../ressources/databases/words_to_translate.txt', 'r') as f:
         for line_number, word in enumerate(f):
@@ -50,10 +48,10 @@ def construct_synset_dictionary(lower_bound, broad=1000):
 
 # construct_list_of_words_to_translate()
 start_time = time.time()
-debuts = [a for a in range(0, 55000, 1000)]
+debuts = [a for a in range(55000, 60000, 1000)]
 #construct_synset_dictionary(55000)
 
-with concurrent.futures.ThreadPoolExecutor(4) as executor:
+with concurrent.futures.ThreadPoolExecutor(1) as executor:
     executor.map(construct_synset_dictionary, debuts)
 
 print('\n')

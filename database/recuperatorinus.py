@@ -14,7 +14,7 @@ for osti in range(1, len(quantic_soup)):
 
 c = 0
 for osti in jesus:
-    if osti == 'heretic':    # TODO: Vérifier la condition > 1700 lignes. Si c'est pas ca je ss gouaké
-        c += 1
-        print(jesus[osti])
+    if jesus[osti] is not None:    # TODO: Vérifier la condition > 1700 lignes. Si c'est pas ca je ss gouaké
+        c += len(jesus[osti].synsets)
+        print(osti)
 print("TOT:", c)
