@@ -40,7 +40,7 @@ def construct_synset_dictionary(lower_bound, broad=1000):
             if line_number >= lower_bound + broad - 1:
                 break
             synsets_dict[word] = LarousseParser(word).feed()
-    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad -1) + '.pkl'
+    filename = '../ressources/pickles/database_' + str(lower_bound) + '-' + str(lower_bound + broad - 1) + '.pkl'
     with open(filename, 'wb') as f:
         pickle.dump(synsets_dict, f)
     return synsets_dict
@@ -49,7 +49,7 @@ def construct_synset_dictionary(lower_bound, broad=1000):
 # construct_list_of_words_to_translate()
 start_time = time.time()
 debuts = [a for a in range(55000, 60000, 1000)]
-#construct_synset_dictionary(55000)
+# construct_synset_dictionary(55000)
 
 with concurrent.futures.ThreadPoolExecutor(1) as executor:
     executor.map(construct_synset_dictionary, debuts)

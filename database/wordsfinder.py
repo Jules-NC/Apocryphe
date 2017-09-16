@@ -13,6 +13,7 @@ def remove_accents(potentially_accented_string_but_not_necessarily):
 
 
 def normalize(word):
+    if word[0] == '#': return '' # To avoid comments
     word = remove_accents(word)  # No accents
     if not word.islower():  # No caps
         word = word.lower()
@@ -37,6 +38,7 @@ def clean_file(source):
             f.write(word)
 
 
+# TODO : DEPRECATED METHODE A ENLEVER ELLE EST CACA ELLE SERT A RIEN ELLE EST NULLE. BREF C'EST UNE MERDE
 def simple_merge(source, target):
     words_file_1 = set()
     words_file_2 = set()
@@ -89,5 +91,13 @@ def merge_files(target, sources):  # Sources is iterator
             t.write(word)
 
 
+def update_words_to_translate():
+    pass
+
 if __name__ == '__main__':
+    print('CALCULATING...')
+
+    clean_file('wiki-100k.txt')
     merge_files('caca.txt', ('a.txt', 'b.txt'))
+
+    print("ENDED !")
