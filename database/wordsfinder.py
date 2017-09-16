@@ -94,6 +94,23 @@ def merge_files(target, sources):  # Sources is iterator
 def update_words_to_translate():
     pass
 
+
+def similarities(source1, source2):
+    words_s1 = list()
+    words_s2 = list()
+    with open('../ressources/databases/' + source1, 'r') as s1:
+        for word in s1:
+            words_s1.append(word)
+    with open('../ressources/databases/' + source2, 'r') as s2:
+        for word in s2:
+            words_s2.append(word)
+
+    words_s1 = words_s1.sort()
+    words_s2 = words_s2.sort()
+    # TODO: le reste
+
+
+
 if __name__ == '__main__':
     print('CALCULATING...')
 
