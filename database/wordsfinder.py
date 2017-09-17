@@ -13,7 +13,8 @@ def remove_accents(potentially_accented_string_but_not_necessarily):
 
 
 def normalize(word):
-    if word[0] == '#': return '' # To avoid comments
+    if word[0] == '#':
+        return ''  # To avoid comments
     word = remove_accents(word)  # No accents
     if not word.islower():  # No caps
         word = word.lower()
@@ -92,10 +93,11 @@ def merge_files(target, sources):  # Sources is iterator
 
 
 def update_words_to_translate():
+    # TODO: ca !
     pass
 
 
-def similarities(source1, source2):
+def similarities(source1, source2):  # O(n*ln(n)) TODO: comparer la vitesse avec &
     words_s1 = list()
     words_s2 = list()
     with open('../ressources/databases/' + source1, 'r') as s1:
@@ -105,16 +107,68 @@ def similarities(source1, source2):
         for word in s2:
             words_s2.append(word)
 
-    words_s1 = words_s1.sort()
-    words_s2 = words_s2.sort()
-    # TODO: le reste
+    words_s1.sort()  # O(n*ln(n))
+    words_s2.sort()  # O(n*ln(n))
 
+    # Init
+    pointer1 = 0
+    pointer2 = 0
+    container = []
+    while pointer1 < len(words_s1) and pointer2 < len(words_s2):  # End O(n)
+        # Cont
+        #print(pointer1, pointer2)
+        if words_s1[pointer1] == words_s2[pointer2]:
+            container.append(words_s1[pointer1])
+            pointer1 += 1
+            pointer2 += 1
+        elif words_s1[pointer1] < words_s2[pointer2]:
+            pointer1 += 1
+        else:  # words_s2[p1] > words_s2[pointer2]
+            pointer2 += 1
+
+    return container
+
+
+def differences(source1, source2):  # TODO: réunir les 2 fcts ?
+    words_s1 = list()
+    words_s2 = list()
+    with open('../ressources/databases/' + source1, 'r') as s1:
+        for word in s1:
+            words_s1.append(word)
+    with open('../ressources/databases/' + source2, 'r') as s2:
+        for word in s2:
+            words_s2.append(word)
+
+    words_s1.sort()  # O(n*ln(n))
+    words_s2.sort()  # O(n*ln(n))
+
+    # Init
+    pointer1 = 0
+    pointer2 = 0
+    container = []
+    while pointer1 < len(words_s1) and pointer2 < len(words_s2):  # End O(n)
+        # Cont
+        # print(pointer1, pointer2)
+        if words_s1[pointer1] == words_s2[pointer2]:
+            pointer1 += 1
+            pointer2 += 1
+        elif words_s1[pointer1] < words_s2[pointer2]:
+            container.append(words_s1[pointer1])
+            pointer1 += 1
+        else:  # words_s2[p1] > words_s2[pointer2]
+            container.append(words_s2[pointer2])
+            pointer2 += 1
+
+    return container
 
 
 if __name__ == '__main__':
     print('CALCULATING...')
 
-    clean_file('wiki-100k.txt')
-    merge_files('caca.txt', ('a.txt', 'b.txt'))
+    # clean_file('wiki-100k.txt')
+    # merge_files('caca.txt', ('a.txt', 'b.txt'))
+    # a = len(similarities('wiki-100k.txt', 'words_to_translate.txt'))
+    b = len(differences('wiki-100k.txt', 'words_to_translate.txt'))
+    print(b)
 
     print("ENDED !")
