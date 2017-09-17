@@ -13,6 +13,8 @@ def recuperate():
     for osti in range(1, len(quantic_soup)):
         jesus.update(quantic_soup[osti])
 
+    print(jesus['dummy'])
+
     with open('../ressources/databases/jesus.pkl', 'wb') as f:
         pickle.dump(jesus, f)
 
