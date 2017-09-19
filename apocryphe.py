@@ -10,9 +10,11 @@ class Apocryphe:
             pass
         add_weights_to_dict(self.corpus)
         self.selected_words = sub_list_of_dict(self.corpus)
+        self.lockeds = []  # Liste des trucs locks, plus simple que le 0 ou le truc de gauss. Quoique ^^
         self.historique = None  # TODO: historique des echecs de chaque mot (2ème dictionnaire avec dedans une liste
         # TODO: de booléens ordonné dans l'ordre du truc. On fera un filtre de convolution d'apprentissage avec ca !)
         # TODO: transmettre ca à un serveur.
+
     def print(self):
         for duo in self.corpus:
             for key, _ in duo:
@@ -49,7 +51,7 @@ def add_weights_to_dict(dict_):
         dict_[key] = [dict_[key], 0, 0]
 
 
-def random_pond(l):
+def random_pond(l):  # TODO: poss: faire ca maisa avec a et b comme ca on est bien
     # Init
     chosen_number = random.randint(0, sum(l)-1)
     i = 0
