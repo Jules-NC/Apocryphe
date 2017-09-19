@@ -11,51 +11,65 @@ Flèche solaire (quoique ca veuille dire)
 from apocryphe import *
 
 
+
+class GUI:
+    def __init__(self):
+        self.apocryphes = []
+        self.commands = {
+                'print': print(apo),
+                'quit': None,  # TODO: créer une fonction arret qui modifie un arg global
+                'reset': apo.reset,  # Oui
+                'save': apo.save,  # Oui TODO: nommage de la save
+                'import': None,  # TODO: import via un nom
+                'sort': apo.sort,  # TODO: facile à faire
+                'sorta': apo.sort_alphabetical,  # TODO: izi
+                'squit': apo.s_quit,  # TODO: ridicule, mais je vais le faire
+                'unlock': apo.unlock,  # TODO: izi
+                'lock': lethe.lock # TODO: en fait ca c'est eazy mais bon...
+                }
+
+    def save(self, nickname):
+        pass
+
+    def delete(self, nickname):
+        pass
+
+    def add(self, filename, nickname):
+        pass
+
+    def load(self, nickname):
+        pass
+
+    def unload(self, nickname):
+        pass
+
+    def branch(self, nickname):
+        pass
+
+    def merge(self, target, nickname):
+        pass
+
+    def savestate(self):
+        pass
+
+    def init(self):
+        # INITIALISATION
+        apo = Apocryphe()
+        continuation = True
+        while continuation:
+            clr_screen(1)
+            # Séléction du mot
+            selected_word = apo.select()
+            print(selected_word)
+            entry = input(">:")
+
+
+
 def clr_screen(i):
-    for a in range(i): 
+    for a in range(i):
         print()
 
-
-def main():
-    # INITIALISATION
-    apo = Apocryphe()
-    continuation = True
-    while continuation:
-        clr_screen(1)
-        # Séléction du mot
-        selected_word = apo.select()
-        print(selected_word)
-        entry = input(">:")
-
-
-def command(texte, apo, lethe):    # CA J'AIME ! OUI J'AIME CA ! OH OUI ! ANNNNNHH !
-    liste = texte.split(' ')
-    clef = liste[0][1:]
-    reste = None
-    try:
-        reste = liste[1]
-        base = reste.split(',')[0]
-    except Exception:
-        base = None
-    try:
-        acide = reste.split(',')[1].split(';') 
-    except Exception:
-        acide = None
-
-    commands = {
-        'print': print(apo),
-        'quit': None,  # TODO: créer une fonction arret qui modifie un arg global
-        'reset': apo.reset,  # Oui
-        'save': apo.save,  # Oui TODO: nommage de la save
-        'import': None,  # TODO: import via un nom
-        'sort': apo.sort,  # TODO: facile à faire
-        'sorta': apo.sort_alphabetical,  # TODO: izi
-        'squit': apo.s_quit,  # TODO: ridicule, mais je vais le faire
-        'unlock': apo.unlock,  # TODO: izi
-        'lock': lethe.lock # TODO: en fait ca c'est eazy mais bon...
-        }
-
-
 if __name__ == '__main__':
-     main()
+     main = GUI()
+     GUI().init()
      pass
