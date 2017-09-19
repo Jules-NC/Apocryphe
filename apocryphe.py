@@ -10,7 +10,9 @@ class Apocryphe:
             pass
         add_weights_to_dict(self.corpus)
         self.selected_words = sub_list_of_dict(self.corpus)
-
+        self.historique = None  # TODO: historique des echecs de chaque mot (2ème dictionnaire avec dedans une liste
+        # TODO: de booléens ordonné dans l'ordre du truc. On fera un filtre de convolution d'apprentissage avec ca !)
+        # TODO: transmettre ca à un serveur.
     def print(self):
         for duo in self.corpus:
             for key, _ in duo:

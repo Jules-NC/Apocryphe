@@ -8,7 +8,7 @@ Flèche solaire (quoique ca veuille dure)
 from pycallgraph.output import GraphvizOutput   # TODO vérifier les importations
 from pycallgraph import PyCallGraph
 from termcolor import colored
-from apocryphe_core import *
+from apocryphe import *
 
 
 def clr_screen(i):
@@ -16,35 +16,16 @@ def clr_screen(i):
         print()
 
 
-def sys_print(titre, contenu, a=True):
-    clr_screen(1)
-    if a:
-        color = 'green'
-        back = 'on_cyan'
-    else:
-        color = 'red'
-        back = 'on_red'
-    print(colored("======[" + titre.upper() + "]======", 'white', back, attrs=['bold', 'underline']))
-    print(colored(contenu, color))
-
-
-def line_print(contenu, a=None):   # TODO renommer ca bien (faire att a ROLF qui en utilise beaucoup)
-    if a:
-        color = 'white'
-        back = 'on_green'
-    elif not a:
-        color = 'white'
-        back = 'on_red'
-    else:
-        color = 'white'
-        back = 'on_grey'
-    print(colored(contenu, color, back, attrs=['bold']))
+def sys_print():
+    pass
+    #print(colored("======[" + titre.upper() + "]======", 'white', back, attrs=['bold', 'underline']))
 
 
 def main():
     # INITIALISATION
     apo = Apocryphe()
-    while True:
+    continuation = True
+    while continuation:
         clr_screen(1)
         # Séléction du mot
         lethe = apo.select()
@@ -73,19 +54,16 @@ def command(texte, apo, lethe):    # CA J'AIME ! OUI J'AIME CA ! OH OUI ! ANNNNN
         acide = None
 
     commands = {
-        'add': apo.add,
-        'addS': apo.add_sens,
-        'del': apo.delete,
-        'delS': apo.del_sens,
         'print': apo.sorted_print,
-        'quit': apo.quit,
-        'reset': apo.reset,
-        'save': apo.save,
-        'sort': apo.sort,
-        'sorta': apo.sort_alphabetical,
-        'squit': apo.s_quit,
-        'unlock': apo.unlock,
-        'lock': lethe.lock
+        'quit': None,  # TODO: créer une fonction arret qui modifie un arg global
+        'reset': apo.reset,  # Oui
+        'save': apo.save,  # Oui TODO: nommage de la save
+        'import': None,  # TODO: import via un nom
+        'sort': apo.sort,  # TODO: facile à faire
+        'sorta': apo.sort_alphabetical,  # TODO: izi
+        'squit': apo.s_quit,  # TODO: ridicule, mais je vais le faire
+        'unlock': apo.unlock,  # TODO: izi
+        'lock': lethe.lock # TODO: en fait ca c'est eazy mais bon...
         }
 
     erreurs = {

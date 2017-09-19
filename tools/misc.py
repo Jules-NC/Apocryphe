@@ -7,7 +7,6 @@ CC LEVENSTHEIN TO WIKIPEDIA ALGORITHM
 
 Ah oui j'ai voulu mettre des tests mais en fait c'est chiant alors si vous voulez modifier bah bonne chance. 
 """
-from apocryphe_core import *
 import numpy as np
 import datetime    # For file name ==> no duplicates
 import math
