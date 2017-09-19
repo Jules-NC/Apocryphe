@@ -3,17 +3,17 @@ import random
 import pickle
 
 
-class Apocryphe:
+class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENTS DOMMAGE !
     def __init__(self):
         with open('ressources/databases/jesus.pkl', 'rb') as f:  # Bdd importat°
-            self.corpus = pickle.load(f)
+            corpus = pickle.load(f)
             pass
-        add_weights_to_dict(self.corpus)
-        self.selected_words = sub_list_of_dict(self.corpus)
-        self.locks = []  # Liste des trucs locks, plus simple que le 0 ou le truc de gauss. Quoique ^^
-        self.historique = None  # TODO: historique des echecs de chaque mot (2ème dictionnaire avec dedans une liste
-        # TODO: de booléens ordonné dans l'ordre du truc. On fera un filtre de convolution d'apprentissage avec ca !)
-        # TODO: transmettre ca à un serveur.
+
+        self.selected_words = init_sub_corpus(corpus, 100)  # dict
+        self.locks = []  # list of keys
+        self.weights = init_weights()  # dict of weights for optimisation
+        self.historique = init_history(self.selected_words)
+        # TODO: fera un filtre de convolution d'apprentissage avec ca && transmettre ca à un serveur.
 
     def print(self):
         for duo in self.corpus:
@@ -23,30 +23,32 @@ class Apocryphe:
     def verify(self, answer, synsets):
         pass
 
-    def update(self, synset, answer):
-        pass
-
-    def random_select(self):
-        return random.choice(self.corpus)
-
+    def update_weights(self):  # TODO: ca !
+        for key in self.selected_words:
+            # self.weights[key] = GAUSS_LIKE FUNC OR ANYTHING
+            pass
 
     def __str__(self):
         return '[NOT_IMPLEMENTED_YET]'
 
 
-def sub_list_of_dict(dict_, broad=100):  # For
-    tampax = [[key, dict_[key]] for key in dict_]
-    random.shuffle(tampax)
+def init_sub_corpus(dict_, broad=100):  # DEGEULASSE !!!
+    temporary_list = [[key, dict_[key]] for key in dict_]
+    random.shuffle(temporary_list)
 
-    if broad >= len(tampax):
-        broad = len(tampax) - 1
+    if broad >= len(temporary_list):
+        broad = len(temporary_list) - 1
 
-    return tampax[0:broad]
+    temporary_list = temporary_list[0:broad]
+    return {item[0]:item[1] for item in temporary_list}
 
 
-def add_weights_to_dict(dict_):
-    for key in dict_:
-        dict_[key] = [dict_[key], 0, 0]
+def init_history(dict_):
+    return {key:[] for key in dict}
+
+
+def init_weights(dict_):
+    return {key:0 for key in dict_}
 
 
 def random_pond(l):  # TODO: poss: faire ca maisa avec a et b comme ca on est bien
