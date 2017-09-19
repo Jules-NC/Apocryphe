@@ -10,7 +10,7 @@ class Apocryphe:
             pass
         add_weights_to_dict(self.corpus)
         self.selected_words = sub_list_of_dict(self.corpus)
-        self.lockeds = []  # Liste des trucs locks, plus simple que le 0 ou le truc de gauss. Quoique ^^
+        self.locks = []  # Liste des trucs locks, plus simple que le 0 ou le truc de gauss. Quoique ^^
         self.historique = None  # TODO: historique des echecs de chaque mot (2ème dictionnaire avec dedans une liste
         # TODO: de booléens ordonné dans l'ordre du truc. On fera un filtre de convolution d'apprentissage avec ca !)
         # TODO: transmettre ca à un serveur.
@@ -26,11 +26,9 @@ class Apocryphe:
     def update(self, synset, answer):
         pass
 
-    def select(self):
+    def random_select(self):
         return random.choice(self.corpus)
 
-    def save(self):
-        pass
 
     def __str__(self):
         return '[NOT_IMPLEMENTED_YET]'

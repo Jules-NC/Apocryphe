@@ -77,12 +77,13 @@ def maxf(x, y, s):
                gauss(x, y, s, 100, 20, 0, 6.4, 7.8))
 
 
-def construct_filename(folder='ressources', filename='dummy', extension='txt'):
+def construct_filename(folder='saves', filename='dummy', extension='pkl'):
     now = datetime.datetime.now()
-    folder = '../ressources/' + folder + '/'
+    folder = 'usr/' + folder + '/'
     date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
     filename = folder + filename + date + '.' + extension
     return filename
+
 
 if __name__ == '__main__':
 
