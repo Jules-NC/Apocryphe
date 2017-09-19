@@ -7,10 +7,8 @@ class Apocryphe:
         with open('ressources/databases/jesus.pkl', 'rb') as f:  # Bdd importat°
             self.corpus = pickle.load(f)
             pass
-
-        self.corpus = dict_to_list_with_tuples(self.corpus)
-        random.shuffle(self.corpus)
-        self.corpus = self.corpus[0:100]
+        add_weight_to_dict(self.corpus)
+        self.selected_words = sub_dict(self.corpus)
 
     def print(self):
         for duo in self.corpus:
@@ -21,8 +19,19 @@ class Apocryphe:
         return random.choice(self.corpus)
 
 
-def dict_to_list_with_tuples(dict_):
-    return [(key, dict_[key]) for key in dict_]
+def sub_dict(dict_, broad=100):
+    tampax = [[key, dict_[key]] for key in dict_]
+    random.shuffle(tampax)
+
+    if broad >= len(tampax):
+        broad = len(tampax) - 1
+
+    return tampax[0:broad]
+
+
+def add_weight_to_dict(dict_):
+    for key in dict_:
+        dict_[key] = [dict_[key], 0, 0]
 
 
 def random_pond(l):
@@ -39,7 +48,3 @@ def random_pond(l):
 
 a = Apocryphe()
 a = a.corpus['tattered']
-# print(a)
-for trad in a.all_translations():
-    print(trad)
-    pass
