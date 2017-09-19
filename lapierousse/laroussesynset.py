@@ -32,6 +32,9 @@ class LSynsets:
             except IndexError:
                 pass
 
+    def all_translations(self):
+        return [translation for lsynset in self.synsets for translation in lsynset.all_translations()]
+
     def __str__(self):
         res = ''
         for synset in self.synsets:
@@ -64,6 +67,11 @@ class LSynset:
             if len(meaning.traductions) is 0 and len(meaning.examples) is 0:
                 del self.meanings[i]
 
+    def all_translations(self):
+        return [translation for meaning in self.meanings for translation in meaning.all_translations()]
+        # print(res) # TODO : resimplifier ca
+        # return res
+
     def __str__(self):
         means = ''
         for meaning in self.meanings:
@@ -76,6 +84,9 @@ class Meaning:  # Will be modified => not a tuple
         self.number = new_number[:-1]
         self.traductions = []
         self.examples = []
+
+    def all_translations(self):
+        return [a for a in self.traductions]
 
     def __str__(self):  # Weird code but beautiful print ^^
         num = '  =>(' + self.number + ')'
