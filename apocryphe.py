@@ -8,19 +8,31 @@ class Apocryphe:
         with open('ressources/databases/jesus.pkl', 'rb') as f:  # Bdd importat°
             self.corpus = pickle.load(f)
             pass
-        add_weight_to_dict(self.corpus)
-        self.selected_words = sub_dict(self.corpus)
+        add_weights_to_dict(self.corpus)
+        self.selected_words = sub_list_of_dict(self.corpus)
 
     def print(self):
         for duo in self.corpus:
             for key, _ in duo:
                 print(key)
 
+    def verify(self, answer, synsets):
+        pass
+
+    def update(self, synset, answer):
+        pass
+
     def select(self):
         return random.choice(self.corpus)
 
+    def save(self):
+        pass
 
-def sub_dict(dict_, broad=100):
+    def __str__(self):
+        return '[NOT_IMPLEMENTED_YET]'
+
+
+def sub_list_of_dict(dict_, broad=100):  # For
     tampax = [[key, dict_[key]] for key in dict_]
     random.shuffle(tampax)
 
@@ -30,7 +42,7 @@ def sub_dict(dict_, broad=100):
     return tampax[0:broad]
 
 
-def add_weight_to_dict(dict_):
+def add_weights_to_dict(dict_):
     for key in dict_:
         dict_[key] = [dict_[key], 0, 0]
 
