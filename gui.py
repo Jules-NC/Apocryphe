@@ -23,7 +23,11 @@ def main():
 
 class GUI:
     def __init__(self):
-        self.apocryphes = []
+        self.apocryphes = [Apocryphe()]
+        self.files_nicknames = {'main':construct_filename()}
+        self.current_branch = 'main'
+        self.loaded_apos = ['main']
+
 
         # self.commands = {
         #         'print': print(apo),
@@ -82,7 +86,7 @@ class GUI:
 def construct_filename():
     now = datetime.datetime.now()
     date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
-    return 'usr/apocryphes/apocryphe_' + date + '.pkl'
+    return 'usr/apocryphes/apo_' + date + '.pkl'
 
 
 def clr_screen(i):
