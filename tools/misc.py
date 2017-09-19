@@ -9,6 +9,7 @@ Ah oui j'ai voulu mettre des tests mais en fait c'est chiant alors si vous voule
 """
 from apocryphe_core import *
 import numpy as np
+import datetime    # For file name ==> no duplicates
 import math
 
 
@@ -76,6 +77,13 @@ def maxf(x, y, s):
                gauss(x, y, s, 100, 10, 0, 4.5, 3.75),
                gauss(x, y, s, 100, 20, 0, 6.4, 7.8))
 
+
+def construct_filename(folder='ressources', filename='dummy', extension='txt'):
+    now = datetime.datetime.now()
+    folder = '../ressources/' + folder + '/'
+    date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
+    filename = folder + filename + date + '.' + extension
+    return filename
 
 if __name__ == '__main__':
 
