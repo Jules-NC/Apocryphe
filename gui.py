@@ -11,22 +11,23 @@ Flèche solaire (quoique ca veuille dire)
 from apocryphe import *
 
 
-
 class GUI:
     def __init__(self):
         self.apocryphes = []
-        self.commands = {
-                'print': print(apo),
-                'quit': None,  # TODO: créer une fonction arret qui modifie un arg global
-                'reset': apo.reset,  # Oui
-                'save': apo.save,  # Oui TODO: nommage de la save
-                'import': None,  # TODO: import via un nom
-                'sort': apo.sort,  # TODO: facile à faire
-                'sorta': apo.sort_alphabetical,  # TODO: izi
-                'squit': apo.s_quit,  # TODO: ridicule, mais je vais le faire
-                'unlock': apo.unlock,  # TODO: izi
-                'lock': lethe.lock # TODO: en fait ca c'est eazy mais bon...
-                }
+
+
+        # self.commands = {
+        #         'print': print(apo),
+        #         'quit': None,  # TODO: créer une fonction arret qui modifie un arg global
+        #         'reset': apo.reset,  # Oui
+        #         'save': apo.save,  # Oui TODO: nommage de la save
+        #         'import': None,  # TODO: import via un nom
+        #         'sort': apo.sort,  # TODO: facile à faire
+        #         'sorta': apo.sort_alphabetical,  # TODO: izi
+        #         'squit': apo.s_quit,  # TODO: ridicule, mais je vais le faire
+        #         'unlock': apo.unlock,  # TODO: izi
+        #         'lock': lethe.lock # TODO: en fait ca c'est eazy mais bon...
+        #         }
 
     def save(self, nickname):
         pass
@@ -52,17 +53,22 @@ class GUI:
     def savestate(self):
         pass
 
-    def init(self):
-        # INITIALISATION
-        apo = Apocryphe()
-        continuation = True
-        while continuation:
-            clr_screen(1)
-            # Séléction du mot
-            selected_word = apo.select()
-            print(selected_word)
-            entry = input(">:")
+    # def init(self):
+    #     # INITIALISATION
+    #     apo = Apocryphe()
+    #     continuation = True
+    #     while continuation:
+    #         clr_screen(1)
+    #         # Séléction du mot
+    #         selected_word = apo.select()
+    #         print(selected_word)
+    #         entry = input(">:")
 
+
+def construct_filename():
+    now = datetime.datetime.now()
+    date = now.strftime("_%Y-%m-%d|%H:%M:") + str(now.second)
+    return 'usr/apocryphes/apocryphe_' + date + '.pkl'
 
 
 def clr_screen(i):
@@ -71,5 +77,4 @@ def clr_screen(i):
 
 if __name__ == '__main__':
      main = GUI()
-     GUI().init()
      pass

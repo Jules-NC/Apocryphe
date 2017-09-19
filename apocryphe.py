@@ -9,10 +9,10 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
             corpus = pickle.load(f)
             pass
 
-        self.selected_words = init_sub_corpus(corpus, 100)  # dict
+        self.dictionary = init_sub_corpus(corpus, 100)  # dict
         self.locks = []  # list of keys
-        self.weights = init_weights()  # dict of weights for optimisation
-        self.historique = init_history(self.selected_words)
+        self.weights = init_weights(self.dictionary)  # dict of weights for optimisation
+        self.historique = init_history(self.dictionary)
         # TODO: fera un filtre de convolution d'apprentissage avec ca && transmettre ca à un serveur.
 
     def print(self):
@@ -24,7 +24,7 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
         pass
 
     def update_weights(self):  # TODO: ca !
-        for key in self.selected_words:
+        for key in self.dictionary:
             # self.weights[key] = GAUSS_LIKE FUNC OR ANYTHING
             pass
 
@@ -44,7 +44,7 @@ def init_sub_corpus(dict_, broad=100):  # DEGEULASSE !!!
 
 
 def init_history(dict_):
-    return {key:[] for key in dict}
+    return {key:[] for key in dict_}
 
 
 def init_weights(dict_):
@@ -62,6 +62,5 @@ def random_pond(l):  # TODO: poss: faire ca maisa avec a et b comme ca on est bi
     # End
     return i-1
 
-
-a = Apocryphe()
-a = a.corpus['tattered']
+if __name__ == '__main__':
+    a = Apocryphe()
