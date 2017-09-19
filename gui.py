@@ -11,10 +11,19 @@ Flèche solaire (quoique ca veuille dire)
 from apocryphe import *
 
 
+def main():
+    try:  # If more than first time
+        with open('usr/core_savestate.pkl', 'rb') as f:
+            gui = pickle.load(f)
+    except FileNotFoundError:  # If first time
+        gui = GUI()
+
+    gui.init()  # Begin the main process
+
+
 class GUI:
     def __init__(self):
         self.apocryphes = []
-
 
         # self.commands = {
         #         'print': print(apo),
@@ -51,7 +60,12 @@ class GUI:
         pass
 
     def savestate(self):
-        pass
+        with open('usr/core_savestate.pkl', 'wb') as f:
+            pickle.dump(self, f)
+
+    def init(self):
+        print('TEST_INITIALISATION')
+        self.savestate()
 
     # def init(self):
     #     # INITIALISATION
@@ -76,5 +90,5 @@ def clr_screen(i):
         print()
 
 if __name__ == '__main__':
-     main = GUI()
+     main()
      pass
