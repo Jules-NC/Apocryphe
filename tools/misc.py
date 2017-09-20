@@ -27,6 +27,15 @@ def levenshtein(source, tg):    # UTSUKUSHI DESU DESU MOTTO MOTTO NOTICE ME SEMP
     return p_r[-1]
 
 
+def min_levenshtein_list(entry, list_):
+    minimum = 42424242424242
+    for str_ in list_:
+        dist = levenshtein(entry, str_)
+        if dist < minimum:
+            minimum = dist
+    return minimum
+
+
 def gauss_3d(x, y, s, maximum=100, x0=0, y0=0, sx=1.0, sy=1.0):
     return maximum * math.exp(-((x - x0) ** 2 / (2 * sx ** 2) + (y - y0) ** 2 / (2 * sy ** 2))) + 8.3 * s
 

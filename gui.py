@@ -14,7 +14,8 @@ import datetime
 
 
 CONTINUATION = True
-
+INDICATEUR = '>: '
+FENCE = 4
 
 def main():
     try:  # If more than first time
@@ -97,17 +98,38 @@ class GUI:
                 }
 
         while CONTINUATION:
-            entry = command_parser(input('§: '))
+            if self.training:  # TODO: affichage plus complet !
+                clr_screen()
+                selected_synsets = apo.random_select()
+                possible_answers = selected_synsets.all_translations()
+                print(selected_synsets.names())
+
+            entry = command_parser(input(INDICATEUR))
+
+            if self.training:
+                answer = list_to_string(entry.args)
+                if min_levenshtein_list(answer, possible_answers) < FENCE:
+                    print('GUD')
+                else:
+                    print('BAD')
+
+                print(possible_answers)
+                # TODO: affichage de oui ou non la bonne réponse
+
             if entry.root in commands:
                 try:
                     commands[entry.root](*entry.args)
                 except TypeError:
                     print('ERREUR: Jacquouille_la_Fripouille')
-            if self.training:
-                print('ouah !')
 
     def active_training(self):
+        global INDICATEUR
+        if not self.training:
+            INDICATEUR = '§: '
+        else:
+            INDICATEUR = '>: '
         self.training = not self.training
+
 
 Command = namedtuple('Command', ['root', 'args'])
 
@@ -117,6 +139,15 @@ def command_parser(entry):
     if len(entry[0]) is 0:
         return Command(None, [None])
     return Command(entry[0], entry[1:])
+
+
+def list_to_string(list_):
+    res = ''
+    for i, el in enumerate(list_):
+        if i is not 0:
+            res += ' '
+        res += str(el)
+    return res
 
 
 def construct_filename():
@@ -130,8 +161,8 @@ def continuation_off():
     CONTINUATION = False
 
 
-def clr_screen(i):
-    for big_prolapsus in range(i):
+def clr_screen():
+    for big_prolapsus in range(5):
         print()
 
 

@@ -1,7 +1,7 @@
-"""LarousseSynset provide a good way to interprete Larousse.fr en-fr traductions and to convert them to a real good
-database
+"""LarousseSynset provide a good way to interpret Larousse.fr en-fr traductions and to convert them to a real good
+database.
 
-It's jsut a way to formalise data in larousse.fr pages
+It's just a way to formalise data in larousse.fr pages
 """
 
 from collections import namedtuple
@@ -21,9 +21,6 @@ class LSynsets:
             return LSynset('DUMMY')  # TODO: Comprendre le comportement de cet objet
 
     def delete_useless_synset(self):
-        #if len(self.synsets) is 1:  # TODO: WTF
-            #del self.synsets[0]    # TODO: COmprendre d'ou ca ca enlevait une erreur
-            #pass
         for i, synset in enumerate(self.synsets):
             if len(synset.meanings) is 0:
                 del self.synsets[i]
@@ -32,8 +29,11 @@ class LSynsets:
             except IndexError:
                 pass
 
+    def names(self):
+        return [name.name for name in self.synsets]
+
     def all_translations(self):
-        return [translation for lsynset in self.synsets for translation in lsynset.all_translations()]
+        return [translation.raw for lsynset in self.synsets for translation in lsynset.all_translations()]
 
     def __str__(self):
         res = ''
