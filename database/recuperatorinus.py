@@ -16,7 +16,7 @@ def recuperate():
     jesus_2_le_retour = {key:value for key, value in jesus.items() if value is not None}  # Car peut aps changer taille
     #  cours d'éxécution...
 
-    with open('../ressources/databases/jesus.pkl', 'wb') as f:
+    with open('../ressources/databases/jesus', 'wb') as f:
         pickle.dump(jesus_2_le_retour, f)
 
     print("FICHIER ENREGISTRE")

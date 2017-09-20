@@ -8,8 +8,7 @@ Flèche solaire (quoique ca veuille dire)
 from collections import namedtuple
 from apocryphe import *
 import datetime
-import sys
-sys.path.append('.')
+import pickle
 
 
 CONTINUATION = True

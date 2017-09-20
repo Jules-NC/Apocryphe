@@ -5,7 +5,7 @@ import random
 
 class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENTS DOMMAGE !
     def __init__(self):
-        with open('ressources/databases/jesus.pkl', 'rb') as f:  # Bdd importat°
+        with open('ressources/databases/jesus', 'rb') as f:  # Bdd importat°
             corpus = pickle.load(f)
             pass
         self.dictionary = init_sub_corpus(corpus, 100)  # dict
