@@ -5,10 +5,7 @@ Created on Sat Aug 19 22:55:09 2017
 @author: Octave Chenavas, Roi de Pologne-Austro-Hongrie-Occidentale, Chef de la légion impériale de Dalmatie,
 Flèche solaire (quoique ca veuille dire)
 """
-# from pycallgraph.output import GraphvizOutput   # TODO: vérifier les importations
-# from pycallgraph import PyCallGraph
 from collections import namedtuple
-# from termcolor import colored
 from apocryphe import *
 import datetime
 
@@ -16,6 +13,7 @@ import datetime
 CONTINUATION = True
 INDICATEUR = '>: '
 FENCE = 4
+
 
 def main():
     try:  # If more than first time
@@ -75,6 +73,9 @@ class GUI:
             self.current_branch = nickname
         else:
             print('ERREUR: Nelson_Mandella')
+
+    def branch(self):
+        print(self.loaded_apos)
 
     def merge(self, target, nickname):  # TODO: ca
         pass
