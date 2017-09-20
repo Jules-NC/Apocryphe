@@ -10,6 +10,7 @@ Flèche solaire (quoique ca veuille dire)
 from collections import namedtuple
 # from termcolor import colored
 from apocryphe import *
+import datetime
 
 
 CONTINUATION = True
@@ -27,36 +28,46 @@ def main():
 
 class GUI:
     def __init__(self):
-        self.apocryphes = {'main':Apocryphe()}
-        self.files_nicknames = {'main':construct_filename()}
+        self.apocryphes = {'main': Apocryphe()}
+        self.files_nicknames = {'main': construct_filename()}
         self.current_branch = 'main'
         self.loaded_apos = ['main']
+        self.training = False
 
     def save(self, nickname):
         with open(self.files_nicknames[nickname], 'wb') as f:
-            pickle.dump(self.apocryphes[nickname])
+            pickle.dump(self.apocryphes[nickname], f)
 
     def delete(self, nickname):
         self.unload(nickname)
-        del self.files_nicknames[nickname]
+        try:
+            self.files_nicknames[nickname]
+        except KeyError:
+            print('ERREUR: Jean_Luc_Mélenchon => mauvais nickname:', nickname)
 
     def add(self, filename, nickname):
         try:
-            with open(filename, 'r') as f:  # If the file exists
-                self.files_nicknames[nickname] = filename
+            with open(filename, 'r'):  # If the file exists
+                self.files_nicknames[nickname] = filename  # TODO: vérifier si Erreur plus tard ici peut etre.
         except FileNotFoundError:
-            print('ERREUR: Robinson_Crusoé')
+            print('ERREUR: Robinson_Crusoé => fichier non trouvé')
 
     def load(self, nickname):
-        with open(self.files_nicknames[nickname], 'rb') as f:
-            self.apocryphes[nickname] = pickle.load(f)
-            self.loaded_apos += nickname
+        try:
+            with open(self.files_nicknames[nickname], 'rb') as f:
+                self.apocryphes[nickname] = pickle.load(f)
+                self.loaded_apos += nickname
+        except FileNotFoundError:
+            print('ERREUR: Terry_Pratchett => mauvais nickname:', nickname)
 
     def unload(self, nickname):
         if self.current_branch == nickname:
             self.current_branch = None
-        self.loaded_apos.remove(nickname)
-        del self.apocryphes[nickname]
+        try:
+            self.loaded_apos.remove(nickname)
+            del self.apocryphes[nickname]
+        except KeyError:
+            print('ERREUR: Kiss_Shot_Acerola_Orion_Heart_Under_Blade => mauvais nickname:', nickname)
 
     def branch(self, nickname):
         if nickname in self.loaded_apos:
@@ -72,7 +83,7 @@ class GUI:
             pickle.dump(self, f)
 
     def main(self):
-        # apo = self.apocryphes[self.current_branch]
+        apo = self.apocryphes[self.current_branch]
         commands = {
                 'delete': self.delete,
                 'add': self.add,
@@ -82,31 +93,21 @@ class GUI:
                 'merge': self.merge,
                 'savestate': self.savestate,
                 'quit': continuation_off,
-                'train': self.train
+                'train': self.active_training
                 }
 
         while CONTINUATION:
-            entry = command_parser(input('>: '))
+            entry = command_parser(input('§: '))
             if entry.root in commands:
                 try:
                     commands[entry.root](*entry.args)
                 except TypeError:
                     print('ERREUR: Jacquouille_la_Fripouille')
+            if self.training:
+                print('ouah !')
 
-    def train(self):
-        pass
-
-    # def init(self):
-    #     # INITIALISATION
-    #     apo = Apocryphe()
-    #     continuation = True
-    #     while continuation:
-    #         clr_screen(1)
-    #         # Séléction du mot
-    #         selected_word = apo.select()
-    #         print(selected_word)
-    #         entry = input(">:")
-
+    def active_training(self):
+        self.training = not self.training
 
 Command = namedtuple('Command', ['root', 'args'])
 
@@ -130,9 +131,10 @@ def continuation_off():
 
 
 def clr_screen(i):
-    for a in range(i):
+    for big_prolapsus in range(i):
         print()
 
+
 if __name__ == '__main__':
-     main()
-     pass
+    main()
+    pass
