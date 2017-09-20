@@ -31,7 +31,8 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
         return i
 
     def random_select(self):
-        pass
+        random_key = random_pond(self.weights)
+        return self.dictionary[random_key]
 
     def count_failures_and_successes(self, key):
         success = 0
@@ -83,6 +84,7 @@ def random_pond(dict_):
             break
         cumulated_sum += value
     return key
+
 
 if __name__ == '__main__':
     a = Apocryphe()
