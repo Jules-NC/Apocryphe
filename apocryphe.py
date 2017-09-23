@@ -1,6 +1,10 @@
+from lapierousse import laroussesynset
 from tools.misc import *
 import pickle
 import random
+import sys
+
+sys.modules['laroussesynset'] = laroussesynset
 
 
 class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENTS DOMMAGE !
