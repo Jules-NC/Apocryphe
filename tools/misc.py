@@ -27,10 +27,11 @@ def levenshtein(source, tg):    # UTSUKUSHI DESU DESU MOTTO MOTTO NOTICE ME SEMP
     return p_r[-1]
 
 
-def min_levenshtein_list(entry, list_):
-    minimum = 424242
-    for item in list_:
+def min_levenshtein_list(entry, list_of_words):
+    minimum = 4242  # Min FENCE + 1
+    for item in list_of_words:
         dist = levenshtein(entry, item)
+        print('CMP: ', entry, '&', item, ': ', dist, sep='')
         if dist < minimum:
             minimum = dist
     return minimum
@@ -47,4 +48,8 @@ def space_shape(x, y, s):
 
 
 if __name__ == '__main__':
+    mots = ['lol', 'lel', 'ptdr']
+    mot = 'lol'
+    print(min_levenshtein_list(mot, mots))
     pass
+

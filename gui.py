@@ -109,9 +109,10 @@ class GUI:
             entry = command_parser(input(INDICATEUR))
 
             if self.training:
-                answer = list_to_string(entry.args)
-                print("LOL", min_levenshtein_list(answer, possible_answers))
-                if min_levenshtein_list(answer, possible_answers) < 4:
+                answer = entry.root + list_to_string(entry.args)
+                print('ANS:', answer)
+                print(min_levenshtein_list(answer, possible_answers))
+                if min_levenshtein_list(answer, possible_answers) < FENCE:
                     print('GUD')
                 else:
                     print('BAD')
@@ -170,5 +171,6 @@ def clr_screen():
 
 
 if __name__ == '__main__':
+    print(list_to_string(['salut', 'les', 'noobs']))
     main()
     pass
