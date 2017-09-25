@@ -111,13 +111,14 @@ class GUI:
             if self.training:
                 answer = entry.root + list_to_string(entry.args)
                 print('ANS:', answer)
-                print(min_levenshtein_list(answer, possible_answers))
                 if min_levenshtein_list(answer, possible_answers) < FENCE:
                     print('GUD')
+                    print(possible_answers)
+
                 else:
+                    print(selected_synsets)
                     print('BAD')
 
-                print(possible_answers)
                 # TODO: affichage de oui ou non la bonne réponse
 
             if entry.root in commands:

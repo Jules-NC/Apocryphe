@@ -28,10 +28,9 @@ def levenshtein(source, tg):    # UTSUKUSHI DESU DESU MOTTO MOTTO NOTICE ME SEMP
 
 
 def min_levenshtein_list(entry, list_of_words):
-    minimum = 4242  # Min FENCE + 1
+    minimum = 4242  # Minimum must be at least FENCE + 1 if you want a true powered thing
     for item in list_of_words:
         dist = levenshtein(entry, item)
-        print('CMP: ', entry, '&', item, ': ', dist, sep='')
         if dist < minimum:
             minimum = dist
     return minimum
