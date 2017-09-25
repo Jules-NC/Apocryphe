@@ -28,9 +28,9 @@ def levenshtein(source, tg):    # UTSUKUSHI DESU DESU MOTTO MOTTO NOTICE ME SEMP
 
 
 def min_levenshtein_list(entry, list_):
-    minimum = 42424242424242
-    for str_ in list_:
-        dist = levenshtein(entry, str_)
+    minimum = 424242
+    for item in list_:
+        dist = levenshtein(entry, item)
         if dist < minimum:
             minimum = dist
     return minimum

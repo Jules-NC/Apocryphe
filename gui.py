@@ -110,7 +110,8 @@ class GUI:
 
             if self.training:
                 answer = list_to_string(entry.args)
-                if min_levenshtein_list(answer, possible_answers) < FENCE:
+                print("LOL", min_levenshtein_list(answer, possible_answers))
+                if min_levenshtein_list(answer, possible_answers) < 4:
                     print('GUD')
                 else:
                     print('BAD')
