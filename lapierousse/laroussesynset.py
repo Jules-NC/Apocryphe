@@ -5,6 +5,7 @@ It's just a way to formalise data in larousse.fr pages
 """
 
 from collections import namedtuple
+from termcolor import colored
 
 
 class LSynsets:
@@ -76,7 +77,9 @@ class LSynset:
         means = ''
         for meaning in self.meanings:
             means += str(meaning)
-        return str(self.name.upper()) + '\n' + str(self.gramatical_category) + '\n' + str(means)
+        name = colored(str(self.name.upper()), 'yellow', attrs=['bold'])
+        gramatical_category = colored(str(self.gramatical_category), 'cyan')
+        return name + '\n' + gramatical_category + '\n' + str(means)
 
 
 class Meaning:  # Will be modified => not a tuple
@@ -92,13 +95,12 @@ class Meaning:  # Will be modified => not a tuple
         num = '  =>(' + self.number + ')'
         traduct = ''
         for traduction in self.traductions:
-            traduct += '    |' + '(' + str(traduction.metadatas.domain) + ', ' + str(traduction.metadatas.metalang) +\
-                       ' , ' + str(traduction.metadatas.category) + ') ' + str(traduction.raw) + '\n'
+            traduct += '    ' + colored('|', 'cyan', attrs=['bold']) + str_metadatas(traduction.metadatas) + colored(
+                str(traduction.raw).strip(), 'grey', 'on_white') + '\n'
         examp = ''
         for example in self.examples:
-            examp += '    {' + '(' + str(example.metadatas.domain) + ', ' + str(example.metadatas.metalang) +\
-                       ' , ' + str(example.metadatas.category) + ') ' + str(example.raw) + ' ==> ' + str(example.trad)\
-                     + '\n'
+            examp += '    ' + colored('{', 'magenta', attrs=['bold']) + str_metadatas(example.metadatas) + str_example(
+                example) + '\n'
         return num + ':\n' + traduct + examp + '\n'
 
 
@@ -110,6 +112,34 @@ Traduction = namedtuple('Traduction', ['raw', 'metadatas'])    # Will not be cha
 
 Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will not be changed => tuple
 
+
+def str_metadatas(met):
+    res = ''
+    if met.domain is not None:
+        res += colored(met.domain[1:-1], 'red')
+    if met.metalang is not None:
+        if len(res) is not 0:
+            res += ', '
+        res += colored(met.metalang[1:-1], 'green')
+    if met.category is not None:
+        if len(res) is not 0:
+            res += ', '
+        if met.category[0:3] == ' - ':
+            category = met.category[3:]
+            res += category
+        else:
+            res += colored(met.category[1:-1], 'blue')
+    if len(res) is not 0:
+        res += '| '
+    return res
+
+
+def str_example(ex):
+    res = ''
+    res += colored(ex.raw, 'magenta')
+    res += ' ==> '
+    res += colored(ex.trad, 'magenta')
+    return res
 
 if __name__ == '__main__':  # TEST ONLY ! IT'S A MODULE !
 

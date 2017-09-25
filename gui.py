@@ -5,6 +5,7 @@ Created on Sat Aug 19 22:55:09 2017
 @author: Octave Chenavas, Roi de Pologne-Austro-Hongrie-Occidentale, Chef de la légion impériale de Dalmatie,
 Flèche solaire (quoique ca veuille dire)
 """
+from termcolor import colored, cprint
 from collections import namedtuple
 from apocryphe import *
 import datetime
@@ -12,7 +13,7 @@ import pickle
 
 
 CONTINUATION = True
-INDICATEUR = '>: '
+INDICATEUR = colored('>: ', color='green')
 FENCE = 4
 
 
@@ -104,20 +105,19 @@ class GUI:
                 clr_screen()
                 selected_synsets = apo.random_select()
                 possible_answers = selected_synsets.all_translations()
-                print(selected_synsets.names())
+                print(colored('TRANSLATE:', 'white', 'on_cyan') + ' ' + str(selected_synsets.names()))
 
             entry = command_parser(input(INDICATEUR))
 
             if self.training:
                 answer = entry.root + list_to_string(entry.args)
-                print('ANS:', answer)
+                print()
                 if min_levenshtein_list(answer, possible_answers) < FENCE:
-                    print('GUD')
+                    print_green('|======GUD======|')
                     print(possible_answers)
-
                 else:
+                    print_red('|======BAD======|')
                     print(selected_synsets)
-                    print('BAD')
 
                 # TODO: affichage de oui ou non la bonne réponse
 
@@ -167,11 +167,21 @@ def continuation_off():
 
 
 def clr_screen():
-    for big_prolapsus in range(5):
+    for big_prolapsus in range(3):
         print()
 
 
+def print_red(x):
+    cprint(x, 'white', 'on_red', attrs=['bold'])
+
+
+def print_green(x):
+    cprint(x, 'white', 'on_green', attrs=['bold'])
+
+
+def print_cyan(x):
+    cprint(x, 'white', 'on_cyan')
+
 if __name__ == '__main__':
-    print(list_to_string(['salut', 'les', 'noobs']))
     main()
     pass
