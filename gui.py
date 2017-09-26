@@ -98,6 +98,7 @@ class GUI:
                 'savestate': self.savestate,
                 'quit': continuation_off,
                 'train': self.active_training
+                # lock:apo.lock
                 }
 
         while CONTINUATION:
@@ -110,7 +111,7 @@ class GUI:
             entry = command_parser(input(INDICATEUR))
 
             if self.training:
-                answer = entry.root + list_to_string(entry.args)
+                answer = str(entry.root) + list_to_string(entry.args)
                 print()
                 if min_levenshtein_list(answer, possible_answers) < FENCE:
                     print_green('|======GUD======|')
@@ -130,9 +131,9 @@ class GUI:
     def active_training(self):
         global INDICATEUR
         if not self.training:
-            INDICATEUR = '§: '
+            INDICATEUR = colored('§: ', 'green')
         else:
-            INDICATEUR = '>: '
+            INDICATEUR = colored('>: ', 'green')
         self.training = not self.training
 
 

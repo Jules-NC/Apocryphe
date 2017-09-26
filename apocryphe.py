@@ -4,7 +4,7 @@ import pickle
 import random
 import sys
 
-sys.modules['laroussesynset'] = laroussesynset
+sys.modules['laroussesynset'] = laroussesynset  # For pickle
 
 
 class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENTS DOMMAGE !

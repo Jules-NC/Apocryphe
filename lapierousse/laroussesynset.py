@@ -70,8 +70,6 @@ class LSynset:
 
     def all_translations(self):
         return [translation for meaning in self.meanings for translation in meaning.all_translations()]
-        # print(res) # TODO : resimplifier ca
-        # return res
 
     def __str__(self):
         means = ''
@@ -95,12 +93,22 @@ class Meaning:  # Will be modified => not a tuple
         num = '  =>(' + self.number + ')'
         traduct = ''
         for traduction in self.traductions:
-            traduct += '    ' + colored('|', 'cyan', attrs=['bold']) + str_metadatas(traduction.metadatas) + colored(
-                str(traduction.raw).strip(), 'grey', 'on_white') + '\n'
+            metadatas = str_metadatas(traduction.metadatas)
+            after = ''
+            if len(metadatas) is not 0:
+                after = colored('| ', 'cyan')
+            translat = colored(str(traduction.raw).strip(), 'grey', 'on_white')
+            traduct += colored('    |', 'cyan', attrs=['bold']) + metadatas + after + translat + '\n'
+
         examp = ''
         for example in self.examples:
-            examp += '    ' + colored('{', 'magenta', attrs=['bold']) + str_metadatas(example.metadatas) + str_example(
-                example) + '\n'
+            metadatas = str_metadatas(example.metadatas)
+            ex = str_example(example)
+            after = ''
+            if len(metadatas) is not 0:
+                after = colored('} ', 'magenta')
+            if example.raw is not None:  # TODO: BUG UNCERTAINTY dans parser !!! WTF LAROUSSE !
+                examp += '    ' + colored('{', 'magenta', attrs=['bold']) + metadatas + after + ex + '\n'
         return num + ':\n' + traduct + examp + '\n'
 
 
@@ -116,7 +124,7 @@ Metadatas = namedtuple('Metadatas', ['domain', 'metalang', 'category'])   # Will
 def str_metadatas(met):
     res = ''
     if met.domain is not None:
-        res += colored(met.domain[1:-1], 'red')
+        res += colored(met.domain, 'red')
     if met.metalang is not None:
         if len(res) is not 0:
             res += ', '
@@ -129,8 +137,6 @@ def str_metadatas(met):
             res += category
         else:
             res += colored(met.category[1:-1], 'blue')
-    if len(res) is not 0:
-        res += '| '
     return res
 
 
