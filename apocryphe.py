@@ -36,7 +36,10 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
 
     def random_select(self):
         random_key = random_pond(self.weights)
-        return self.dictionary[random_key]
+        return (random_key, self.dictionary[random_key])
+
+    def lock(self, key):  # TODO: ca !
+        pass
 
     def count_failures_and_successes(self, key):
         success = 0
@@ -53,6 +56,12 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
     def update_weights(self):
         for key in self.weights.keys():
             self.update_weight(key)
+
+    def judge(self, key, boolean):
+        if boolean is True:
+            self.historique[key] += True
+        else:
+            self.historique[key] += False
 
     def __str__(self):
         return '[NOT_IMPLEMENTED_YET]'
