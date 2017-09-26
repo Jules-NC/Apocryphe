@@ -97,8 +97,9 @@ class GUI:
                 'merge': self.merge,
                 'savestate': self.savestate,
                 'quit': continuation_off,
-                'train': self.active_training
-                # lock:apo.lock
+                'train': self.active_training,
+                'lock': apo.lock,
+                'undo_unlock': apo.undo_lock
                 }
 
         while CONTINUATION:

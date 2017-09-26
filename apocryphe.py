@@ -13,10 +13,11 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
             corpus = pickle.load(f)
             pass
         self.dictionary = init_sub_corpus(corpus, 100)  # dict
-        self.locks = set()  # set of keys O(1)
+        self.lockeds = dict()  # set of keys O(1)
         self.weights = init_weights(self.dictionary)  # dict of weights for optimisation
         self.historique = init_history(self.dictionary)
         self.update_weights()
+        self.last_locks = []
 
         # TODO: fera un filtre de convolution d'apprentissage avec ca && transmettre ca à un serveur.
 
@@ -38,8 +39,16 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
         random_key = random_pond(self.weights)
         return random_key, self.dictionary[random_key]
 
-    def lock(self, key):  # TODO: ca !
-        pass
+    def lock(self, key):  # TODO: regarder erreur !
+        if self.lockeds.get(key) is None:
+            return
+        self.lockeds[key] = self.dictionary.pop(key)
+        self.last_locks += (key, self.lockeds[key])
+
+    def undo_lock(self):
+        if len(self.last_locks) is not 0:
+            self.dictionary[self.last_lock[-1][0]] = self.last_lock[-1][1]
+            del self.last_lock[-1]
 
     def count_failures_and_successes(self, key):
         success = 0
