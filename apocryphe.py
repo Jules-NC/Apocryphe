@@ -36,7 +36,7 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
 
     def random_select(self):
         random_key = random_pond(self.weights)
-        return (random_key, self.dictionary[random_key])
+        return random_key, self.dictionary[random_key]
 
     def lock(self, key):  # TODO: ca !
         pass
@@ -54,14 +54,14 @@ class Apocryphe:  # TOUTE RECHERCHE ICI EST LINEAIRE. SI VOUS N ETES PAS CONTENT
         self.weights[key] = space_shape(*self.count_failures_and_successes(key), self.compute_row(key))  # TODO: ca
 
     def update_weights(self):
-        for key in self.weights.keys():
+        for key in self.weights:
             self.update_weight(key)
 
     def judge(self, key, boolean):
-        if boolean is True:
-            self.historique[key] += True
+        if boolean:
+            self.historique[key].append(True)
         else:
-            self.historique[key] += False
+            self.historique[key].append(False)
 
     def __str__(self):
         return '[NOT_IMPLEMENTED_YET]'
@@ -75,11 +75,11 @@ def init_sub_corpus(dict_, broad=100):  # DEGEULASSE !!!
         broad = len(temporary_list) - 1
 
     temporary_list = temporary_list[0:broad]
-    return {item[0]:item[1] for item in temporary_list}
+    return {item[0]: item[1] for item in temporary_list}
 
 
 def init_history(dict_):
-    return {key:[] for key in dict_}
+    return {key: [] for key in dict_}
 
 
 def init_weights(dict_):
@@ -89,7 +89,7 @@ def init_weights(dict_):
 
 def random_pond(dict_):
     """WORK ! O(n)"""
-    n = sum(dict_.values())
+    n = int(sum(dict_.values()))
     cumulated_sum = 0
     r = random.randint(0, n-1)
     for key, value in dict_.items():
@@ -103,3 +103,7 @@ if __name__ == '__main__':
     a = Apocryphe()
     print(a.historique)
     print(a.weights)
+    key_, truc = a.random_select()
+    print(type(truc))
+    print(type(key_))
+    a.update_weight(key_)

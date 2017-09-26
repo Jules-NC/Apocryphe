@@ -104,7 +104,7 @@ class GUI:
         while CONTINUATION:
             if self.training:  # TODO: affichage plus complet !
                 clr_screen()
-                key, selected_synsets = apo.random_select()[0]
+                apo_key, selected_synsets = apo.random_select()
                 possible_answers = selected_synsets.all_translations()
                 print(colored('TRANSLATE:', 'white', 'on_cyan') + ' ' + str(selected_synsets.names()))
 
@@ -116,12 +116,13 @@ class GUI:
                 if min_levenshtein_list(answer, possible_answers) < FENCE:
                     print_green('|======GUD======|')
                     print(possible_answers)
-                    apo.judge(key, True)
+                    apo.judge(apo_key, True)
                 else:
                     print_red('|======BAD======|')
                     print(selected_synsets)
-                    apo.judge(key, False)
-                apo.update_weight(key)
+                    apo.judge(apo_key, False)
+
+                apo.update_weight(apo_key)
 
             if entry.root in commands:
                 try:
